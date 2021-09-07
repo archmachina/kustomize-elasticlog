@@ -1,0 +1,6 @@
+[submodule "elastic"]
+	path = elastic
+	url = https://github.com/noveris-inf/k8s-elastic
+[submodule "namespace"]
+	path = namespace
+	url = https://github.com/noveris-inf/k8s-namespace

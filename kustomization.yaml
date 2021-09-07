@@ -1,0 +1,6 @@
+resources:
+  - ./namespace
+  - ./elastic
+
+configurations:
+  - config.yaml
