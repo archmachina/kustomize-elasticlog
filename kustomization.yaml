@@ -1,6 +1,7 @@
 resources:
   - ./namespace
   - ./elastic
+  - ./kibana
 
 configurations:
   - config.yaml
