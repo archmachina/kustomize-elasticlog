@@ -2,6 +2,22 @@ resources:
   - ./namespace
   - ./elastic
   - ./kibana
+  - ./filebeat-syslog
 
 configurations:
   - config.yaml
+
+patches:
+- patch: |-
+    apiVersion: apps/v1
+    kind: DaemonSet
+    metadata:
+      name: filebeat-syslog-ds
+    spec:
+      template:
+        spec:
+          containers:
+            - name: filebeat-syslog
+              env:
+                - name: ELASTIC_HOST
+                  value: "$(ELASTIC_SVC)"

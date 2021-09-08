@@ -7,3 +7,6 @@
 [submodule "kibana"]
 	path = kibana
 	url = https://github.com/noveris-inf/k8s-kibana
+[submodule "filebeat-syslog"]
+	path = filebeat-syslog
+	url = https://github.com/noveris-inf/k8s-filebeat-syslog
