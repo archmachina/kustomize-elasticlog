@@ -3,6 +3,7 @@ resources:
   - ./elastic
   - ./kibana
   - ./filebeat-syslog
+  - ./filebeat-netflow
 
 configurations:
   - config.yaml

@@ -10,3 +10,6 @@
 [submodule "filebeat-syslog"]
 	path = filebeat-syslog
 	url = https://github.com/noveris-inf/k8s-filebeat-syslog
+[submodule "filebeat-netflow"]
+	path = filebeat-netflow
+	url = https://github.com/noveris-inf/k8s-filebeat-netflow
