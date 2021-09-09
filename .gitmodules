@@ -13,3 +13,6 @@
 [submodule "filebeat-netflow"]
 	path = filebeat-netflow
 	url = https://github.com/noveris-inf/k8s-filebeat-netflow
+[submodule "beatload"]
+	path = beatload
+	url = https://github.com/noveris-inf/k8s-beatload
