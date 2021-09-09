@@ -1,0 +1,46 @@
+---
+name: main
+on:
+  workflow_dispatch:
+  push:
+    branches:
+      - main
+  pull_request:
+    branches:
+      - main
+
+jobs:
+  Linting:
+    name: "Linting"
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v2
+        with:
+          submodules: false
+
+      - name: Python 3
+        uses: actions/setup-python@v2
+        with:
+          python-version: '3.x'
+
+      - name: Install yamllint
+        run: pip3 install yamllint
+
+      - name: Lint code.
+        run: |
+          yamllint -f standard.
+
+  Kustomize:
+    name: "Kustomize"
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v2
+        with:
+          submodules: false
+
+      - name: kustomize
+        run: kustomize build .

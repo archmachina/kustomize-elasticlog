@@ -1,3 +1,4 @@
+---
 resources:
   - ./namespace
   - ./elastic
@@ -10,211 +11,211 @@ configurations:
   - config.yaml
 
 patches:
-- patch: |-
-    apiVersion: apps/v1
-    kind: DaemonSet
-    metadata:
-      name: filebeat-syslog-ds
-    spec:
-      template:
-        spec:
-          containers:
-            - name: filebeat-syslog
-              env:
-                - name: ELASTIC_HOST
-                  value: "$(ELASTIC_SVC)"
-- patch: |-
-    apiVersion: apps/v1
-    kind: Deployment
-    metadata:
-      name: beatload-dp
-    spec:
-      template:
-        spec:
-          initContainers:
-            - name: conn-check
-              env:
-                - name: ELASTIC_HOST
-                  value: "$(ELASTIC_SVC)"
-- patch: |-
-    apiVersion: apps/v1
-    kind: Deployment
-    metadata:
-      name: beatload-dp
-    spec:
-      template:
-        spec:
-          initContainers:
-            - name: ilm-setup
-              env:
-                - name: ELASTIC_HOST
-                  value: "$(ELASTIC_SVC)"
-- patch: |-
-    apiVersion: apps/v1
-    kind: Deployment
-    metadata:
-      name: beatload-dp
-    spec:
-      template:
-        spec:
-          initContainers:
-            - name: conn-check
-              env:
-                - name: KIBANA_HOST
-                  value: "$(KIBANA_SVC)"
-- patch: |-
-    apiVersion: apps/v1
-    kind: Deployment
-    metadata:
-      name: beatload-dp
-    spec:
-      template:
-        spec:
-          initContainers:
-            - name: filebeat-load
-              env:
-                - name: KIBANA_HOST
-                  value: "$(KIBANA_SVC)"
-- patch: |-
-    apiVersion: apps/v1
-    kind: Deployment
-    metadata:
-      name: beatload-dp
-    spec:
-      template:
-        spec:
-          initContainers:
-            - name: filebeat-load
-              env:
-                - name: ELASTIC_HOST
-                  value: "$(ELASTIC_SVC)"
-- patch: |-
-    apiVersion: apps/v1
-    kind: Deployment
-    metadata:
-      name: beatload-dp
-    spec:
-      template:
-        spec:
-          initContainers:
-            - name: filebeat-load-dashboard
-              env:
-                - name: KIBANA_HOST
-                  value: "$(KIBANA_SVC)"
-- patch: |-
-    apiVersion: apps/v1
-    kind: Deployment
-    metadata:
-      name: beatload-dp
-    spec:
-      template:
-        spec:
-          initContainers:
-            - name: filebeat-load-dashboard
-              env:
-                - name: ELASTIC_HOST
-                  value: "$(ELASTIC_SVC)"
-- patch: |-
-    apiVersion: apps/v1
-    kind: Deployment
-    metadata:
-      name: beatload-dp
-    spec:
-      template:
-        spec:
-          initContainers:
-            - name: auditbeat-load
-              env:
-                - name: KIBANA_HOST
-                  value: "$(KIBANA_SVC)"
-- patch: |-
-    apiVersion: apps/v1
-    kind: Deployment
-    metadata:
-      name: beatload-dp
-    spec:
-      template:
-        spec:
-          initContainers:
-            - name: auditbeat-load
-              env:
-                - name: ELASTIC_HOST
-                  value: "$(ELASTIC_SVC)"
-- patch: |-
-    apiVersion: apps/v1
-    kind: Deployment
-    metadata:
-      name: beatload-dp
-    spec:
-      template:
-        spec:
-          initContainers:
-            - name: auditbeat-load-dashboard
-              env:
-                - name: KIBANA_HOST
-                  value: "$(KIBANA_SVC)"
-- patch: |-
-    apiVersion: apps/v1
-    kind: Deployment
-    metadata:
-      name: beatload-dp
-    spec:
-      template:
-        spec:
-          initContainers:
-            - name: auditbeat-load-dashboard
-              env:
-                - name: ELASTIC_HOST
-                  value: "$(ELASTIC_SVC)"
-- patch: |-
-    apiVersion: apps/v1
-    kind: Deployment
-    metadata:
-      name: beatload-dp
-    spec:
-      template:
-        spec:
-          initContainers:
-            - name: metricbeat-load
-              env:
-                - name: KIBANA_HOST
-                  value: "$(KIBANA_SVC)"
-- patch: |-
-    apiVersion: apps/v1
-    kind: Deployment
-    metadata:
-      name: beatload-dp
-    spec:
-      template:
-        spec:
-          initContainers:
-            - name: metricbeat-load
-              env:
-                - name: ELASTIC_HOST
-                  value: "$(ELASTIC_SVC)"
-- patch: |-
-    apiVersion: apps/v1
-    kind: Deployment
-    metadata:
-      name: beatload-dp
-    spec:
-      template:
-        spec:
-          initContainers:
-            - name: metricbeat-load-dashboard
-              env:
-                - name: KIBANA_HOST
-                  value: "$(KIBANA_SVC)"
-- patch: |-
-    apiVersion: apps/v1
-    kind: Deployment
-    metadata:
-      name: beatload-dp
-    spec:
-      template:
-        spec:
-          initContainers:
-            - name: metricbeat-load-dashboard
-              env:
-                - name: ELASTIC_HOST
-                  value: "$(ELASTIC_SVC)"
+  - patch: |-
+      apiVersion: apps/v1
+      kind: DaemonSet
+      metadata:
+        name: filebeat-syslog-ds
+      spec:
+        template:
+          spec:
+            containers:
+              - name: filebeat-syslog
+                env:
+                  - name: ELASTIC_HOST
+                    value: "$(ELASTIC_SVC)"
+  - patch: |-
+      apiVersion: apps/v1
+      kind: Deployment
+      metadata:
+        name: beatload-dp
+      spec:
+        template:
+          spec:
+            initContainers:
+              - name: conn-check
+                env:
+                  - name: ELASTIC_HOST
+                    value: "$(ELASTIC_SVC)"
+  - patch: |-
+      apiVersion: apps/v1
+      kind: Deployment
+      metadata:
+        name: beatload-dp
+      spec:
+        template:
+          spec:
+            initContainers:
+              - name: ilm-setup
+                env:
+                  - name: ELASTIC_HOST
+                    value: "$(ELASTIC_SVC)"
+  - patch: |-
+      apiVersion: apps/v1
+      kind: Deployment
+      metadata:
+        name: beatload-dp
+      spec:
+        template:
+          spec:
+            initContainers:
+              - name: conn-check
+                env:
+                  - name: KIBANA_HOST
+                    value: "$(KIBANA_SVC)"
+  - patch: |-
+      apiVersion: apps/v1
+      kind: Deployment
+      metadata:
+        name: beatload-dp
+      spec:
+        template:
+          spec:
+            initContainers:
+              - name: filebeat-load
+                env:
+                  - name: KIBANA_HOST
+                    value: "$(KIBANA_SVC)"
+  - patch: |-
+      apiVersion: apps/v1
+      kind: Deployment
+      metadata:
+        name: beatload-dp
+      spec:
+        template:
+          spec:
+            initContainers:
+              - name: filebeat-load
+                env:
+                  - name: ELASTIC_HOST
+                    value: "$(ELASTIC_SVC)"
+  - patch: |-
+      apiVersion: apps/v1
+      kind: Deployment
+      metadata:
+        name: beatload-dp
+      spec:
+        template:
+          spec:
+            initContainers:
+              - name: filebeat-load-dashboard
+                env:
+                  - name: KIBANA_HOST
+                    value: "$(KIBANA_SVC)"
+  - patch: |-
+      apiVersion: apps/v1
+      kind: Deployment
+      metadata:
+        name: beatload-dp
+      spec:
+        template:
+          spec:
+            initContainers:
+              - name: filebeat-load-dashboard
+                env:
+                  - name: ELASTIC_HOST
+                    value: "$(ELASTIC_SVC)"
+  - patch: |-
+      apiVersion: apps/v1
+      kind: Deployment
+      metadata:
+        name: beatload-dp
+      spec:
+        template:
+          spec:
+            initContainers:
+              - name: auditbeat-load
+                env:
+                  - name: KIBANA_HOST
+                    value: "$(KIBANA_SVC)"
+  - patch: |-
+      apiVersion: apps/v1
+      kind: Deployment
+      metadata:
+        name: beatload-dp
+      spec:
+        template:
+          spec:
+            initContainers:
+              - name: auditbeat-load
+                env:
+                  - name: ELASTIC_HOST
+                    value: "$(ELASTIC_SVC)"
+  - patch: |-
+      apiVersion: apps/v1
+      kind: Deployment
+      metadata:
+        name: beatload-dp
+      spec:
+        template:
+          spec:
+            initContainers:
+              - name: auditbeat-load-dashboard
+                env:
+                  - name: KIBANA_HOST
+                    value: "$(KIBANA_SVC)"
+  - patch: |-
+      apiVersion: apps/v1
+      kind: Deployment
+      metadata:
+        name: beatload-dp
+      spec:
+        template:
+          spec:
+            initContainers:
+              - name: auditbeat-load-dashboard
+                env:
+                  - name: ELASTIC_HOST
+                    value: "$(ELASTIC_SVC)"
+  - patch: |-
+      apiVersion: apps/v1
+      kind: Deployment
+      metadata:
+        name: beatload-dp
+      spec:
+        template:
+          spec:
+            initContainers:
+              - name: metricbeat-load
+                env:
+                  - name: KIBANA_HOST
+                    value: "$(KIBANA_SVC)"
+  - patch: |-
+      apiVersion: apps/v1
+      kind: Deployment
+      metadata:
+        name: beatload-dp
+      spec:
+        template:
+          spec:
+            initContainers:
+              - name: metricbeat-load
+                env:
+                  - name: ELASTIC_HOST
+                    value: "$(ELASTIC_SVC)"
+  - patch: |-
+      apiVersion: apps/v1
+      kind: Deployment
+      metadata:
+        name: beatload-dp
+      spec:
+        template:
+          spec:
+            initContainers:
+              - name: metricbeat-load-dashboard
+                env:
+                  - name: KIBANA_HOST
+                    value: "$(KIBANA_SVC)"
+  - patch: |-
+      apiVersion: apps/v1
+      kind: Deployment
+      metadata:
+        name: beatload-dp
+      spec:
+        template:
+          spec:
+            initContainers:
+              - name: metricbeat-load-dashboard
+                env:
+                  - name: ELASTIC_HOST
+                    value: "$(ELASTIC_SVC)"
