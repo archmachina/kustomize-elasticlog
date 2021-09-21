@@ -1,6 +1,5 @@
 ---
 resources:
-  - ./namespace
   - ./elastic
   - ./kibana
   - ./filebeat-syslog
