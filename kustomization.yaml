@@ -5,6 +5,7 @@ resources:
   - ./filebeat-syslog
   - ./filebeat-netflow
   - ./beatload
+  - ./logstash
 
 configurations:
   - config.yaml
@@ -23,6 +24,71 @@ patches:
                 env:
                   - name: ELASTIC_HOST
                     value: "$(ELASTIC_SVC)"
+  - patch: |-
+      apiVersion: apps/v1
+      kind: Deployment
+      metadata:
+        name: kibana-dp
+      spec:
+        template:
+          spec:
+            containers:
+              - name: kibana
+                env:
+                  - name: ELASTICSEARCH_HOSTS
+                    value: "[\"https://$(ELASTIC_SVC):9200\"]"
+  - patch: |-
+      apiVersion: apps/v1
+      kind: Deployment
+      metadata:
+        name: logstash-dp
+      spec:
+        template:
+          spec:
+            containers:
+              - name: logstash
+                env:
+                  - name: ELASTIC_URI
+                    value: "https://$(ELASTIC_SVC):9200"
+  - patch: |-
+      apiVersion: apps/v1
+      kind: Deployment
+      metadata:
+        name: logstash-dp
+      spec:
+        template:
+          spec:
+            containers:
+              - name: logstash
+                env:
+                  - name: XPACK_MONITORING_ELASTICSEARCH_HOSTS
+                    value: "[\"https://$(ELASTIC_SVC):9200\"]"
+  - patch: |-
+      apiVersion: apps/v1
+      kind: DaemonSet
+      metadata:
+        name: filebeat-syslog-ds
+      spec:
+        template:
+          spec:
+            initContainers:
+              - name: filebeat-syslog-setup
+                env:
+                  - name: ELASTIC_HOST
+                    value: "$(ELASTIC_SVC)"
+  - patch: |-
+      apiVersion: apps/v1
+      kind: DaemonSet
+      metadata:
+        name: filebeat-syslog-ds
+      spec:
+        template:
+          spec:
+            containers:
+              - name: filebeat-syslog
+                env:
+                  - name: LOGSTASH_HOST
+                    value: "$(LOGSTASH_SVC)"
   - patch: |-
       apiVersion: apps/v1
       kind: Deployment

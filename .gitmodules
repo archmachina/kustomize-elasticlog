@@ -13,3 +13,6 @@
 [submodule "beatload"]
 	path = beatload
 	url = https://github.com/noveris-inf/k8s-beatload
+[submodule "logstash"]
+	path = logstash
+	url = https://github.com/noveris-inf/k8s-logstash
