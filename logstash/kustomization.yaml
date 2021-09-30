@@ -1,0 +1,25 @@
+---
+
+resources:
+  - service.yaml
+  - deployment.yaml
+
+configMapGenerator:
+  - name: logstash-pipeline-config
+    files:
+      - config/0001_input_beats.conf
+      - config/0102_timestamp.conf
+      - config/0201_output_beats.conf
+
+secretGenerator:
+  - name: logstash-elastic-cred
+    type: Opaque
+  - name: logstash-cert
+    type: Opaque
+
+vars:
+  - name: LOGSTASH_SVC
+    objref:
+      kind: Service
+      name: logstash-svc
+      apiVersion: v1

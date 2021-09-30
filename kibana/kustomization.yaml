@@ -1,0 +1,21 @@
+---
+
+resources:
+  - service.yaml
+  - deployment.yaml
+  - ingress.yaml
+
+vars:
+  - name: KIBANA_SVC
+    objref:
+      kind: Service
+      name: kibana-svc
+      apiVersion: v1
+
+secretGenerator:
+  - name: kibana-elastic-cred
+    type: Opaque
+  - name: kibana-object-key
+    type: Opaque
+  - name: kibana-cert
+    type: kubernetes.io/tls

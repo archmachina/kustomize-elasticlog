@@ -1,0 +1,15 @@
+---
+
+resources:
+  - daemonset.yaml
+
+secretGenerator:
+  - name: filebeat-syslog-elastic-cred
+    type: Opaque
+  - name: filebeat-syslog-cert
+    type: Opaque
+
+configMapGenerator:
+  - name: filebeat-syslog-config
+    files:
+      - filebeat-syslog.yml=config/filebeat-syslog.yml

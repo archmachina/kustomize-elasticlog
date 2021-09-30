@@ -1,0 +1,15 @@
+---
+
+resources:
+  - daemonset.yaml
+
+secretGenerator:
+  - name: filebeat-netflow-elastic-cred
+    type: Opaque
+  - name: filebeat-netflow-cert
+    type: Opaque
+
+configMapGenerator:
+  - name: filebeat-netflow-config
+    files:
+      - filebeat.yml=config/filebeat-netflow.yaml

@@ -1,0 +1,19 @@
+---
+
+resources:
+  - deployment.yaml
+
+secretGenerator:
+  - name: beatload-cred
+    type: Opaque
+  - name: beatload-cert
+    type: Opaque
+
+configMapGenerator:
+  - name: beatload-config
+    files:
+      - conn-check.sh=config/conn-check.sh
+      - ilm-setup.sh=config/ilm-setup.sh
+      - auditbeat.yml=config/load-auditbeat.yml
+      - filebeat.yml=config/load-filebeat.yml
+      - metricbeat.yml=config/load-metricbeat.yml

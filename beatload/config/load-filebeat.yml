@@ -1,0 +1,37 @@
+---
+
+setup.template.enabled: true
+setup.template.type: index
+setup.template.name: "filebeat-%{[agent.version]}"
+setup.template.pattern: "filebeat-%{[agent.version]}-*"
+setup.template.overwrite: false
+setup.template.settings:
+  index.number_of_shards: 1
+  index.number_of_replicas: 1
+
+setup.ilm.enabled: true
+setup.ilm.rollover_alias: "filebeat-%{[agent.version]}"
+setup.ilm.pattern: "{now/d}-000001"
+setup.ilm.policy_name: "default-beats"
+setup.ilm.check_exists: true
+setup.ilm.overwrite: false
+
+setup.kibana:
+  host: "${KIBANA_HOST}:${KIBANA_PORT}"
+  protocol: https
+  username: "${KIBANA_USERNAME}"
+  password: "${KIBANA_PASSWORD}"
+  ssl.certificate_authorities:
+    - "/usr/share/filebeat/certs/ca.crt"
+  ssl.enabled: true
+
+output.elasticsearch:
+  enabled: true
+  hosts: ["${ELASTIC_HOST}:${ELASTIC_PORT}"]
+  username: "${ELASTIC_USERNAME}"
+  password: "${ELASTIC_PASSWORD}"
+  ssl.certificate_authorities:
+    - "/usr/share/filebeat/certs/ca.crt"
+  index: "filebeat-%{[agent.version]}"
+  protocol: https
+  ssl.enabled: true
