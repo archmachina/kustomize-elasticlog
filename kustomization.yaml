@@ -26,6 +26,19 @@ patches:
                     value: "$(ELASTIC_SVC)"
   - patch: |-
       apiVersion: apps/v1
+      kind: DaemonSet
+      metadata:
+        name: filebeat-syslog-ds
+      spec:
+        template:
+          spec:
+            initContainers:
+              - name: filebeat-syslog-setup
+                env:
+                  - name: ELASTIC_HOST
+                    value: "$(ELASTIC_SVC)"
+  - patch: |-
+      apiVersion: apps/v1
       kind: Deployment
       metadata:
         name: kibana-dp
