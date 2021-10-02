@@ -17,3 +17,4 @@ configMapGenerator:
       - auditbeat.yml=config/load-auditbeat.yml
       - filebeat.yml=config/load-filebeat.yml
       - metricbeat.yml=config/load-metricbeat.yml
+      - ilm-policy.json=config/ilm-policy.json

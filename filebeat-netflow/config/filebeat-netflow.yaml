@@ -26,9 +26,10 @@ setup.template.settings:
 setup.ilm.enabled: true
 setup.ilm.rollover_alias: "filebeat-netflow-%{[agent.version]}"
 setup.ilm.pattern: "{now/d}-000001"
-setup.ilm.policy_name: "default-filebeat-netflow"
+setup.ilm.policy_name: "filebeat-netflow"
 setup.ilm.check_exists: true
 setup.ilm.overwrite: false
+setup.ilm.policy_file: "ilm-policy.json"
 
 output.elasticsearch:
   enabled: true

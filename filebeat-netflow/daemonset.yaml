@@ -28,6 +28,9 @@ spec:
             - name: filebeat-netflow-config
               mountPath: /usr/share/filebeat/filebeat.yml
               subPath: filebeat.yml
+            - name: filebeat-netflow-config
+              mountPath: /usr/share/filebeat/ilm-policy.json
+              subPath: ilm-policy.json
             - name: filebeat-netflow-cert
               mountPath: /usr/share/filebeat/certs/
           env:

@@ -127,6 +127,9 @@ spec:
             - name: beatload-config
               mountPath: /usr/share/filebeat/filebeat.yml
               subPath: filebeat.yml
+            - name: beatload-config
+              mountPath: /usr/share/filebeat/ilm-policy.json
+              subPath: ilm-policy.json
         - name: filebeat-load-dashboard
           image: docker.elastic.co/beats/filebeat:7.14.2-amd64
           command: ['/usr/share/filebeat/filebeat']
@@ -169,6 +172,9 @@ spec:
             - name: beatload-config
               mountPath: /usr/share/filebeat/filebeat.yml
               subPath: filebeat.yml
+            - name: beatload-config
+              mountPath: /usr/share/filebeat/ilm-policy.json
+              subPath: ilm-policy.json
         - name: metricbeat-load
           image: docker.elastic.co/beats/metricbeat:7.14.2-amd64
           command: ['/usr/share/metricbeat/metricbeat']
@@ -211,6 +217,9 @@ spec:
             - name: beatload-config
               mountPath: /usr/share/metricbeat/metricbeat.yml
               subPath: metricbeat.yml
+            - name: beatload-config
+              mountPath: /usr/share/metricbeat/ilm-policy.json
+              subPath: ilm-policy.json
         - name: metricbeat-load-dashboard
           image: docker.elastic.co/beats/metricbeat:7.14.2-amd64
           command: ['/usr/share/metricbeat/metricbeat']
@@ -253,6 +262,9 @@ spec:
             - name: beatload-config
               mountPath: /usr/share/metricbeat/metricbeat.yml
               subPath: metricbeat.yml
+            - name: beatload-config
+              mountPath: /usr/share/metricbeat/ilm-policy.json
+              subPath: ilm-policy.json
         - name: auditbeat-load
           image: docker.elastic.co/beats/auditbeat:7.14.2-amd64
           command: ['/usr/share/auditbeat/auditbeat']
@@ -295,6 +307,9 @@ spec:
             - name: beatload-config
               mountPath: /usr/share/auditbeat/auditbeat.yml
               subPath: auditbeat.yml
+            - name: beatload-config
+              mountPath: /usr/share/auditbeat/ilm-policy.json
+              subPath: ilm-policy.json
         - name: auditbeat-load-dashboard
           image: docker.elastic.co/beats/auditbeat:7.14.2-amd64
           command: ['/usr/share/auditbeat/auditbeat']
@@ -337,6 +352,9 @@ spec:
             - name: beatload-config
               mountPath: /usr/share/auditbeat/auditbeat.yml
               subPath: auditbeat.yml
+            - name: beatload-config
+              mountPath: /usr/share/auditbeat/ilm-policy.json
+              subPath: ilm-policy.json
       containers:
         - name: pause
           image: gcr.io/google_containers/pause

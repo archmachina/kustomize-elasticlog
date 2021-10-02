@@ -13,3 +13,4 @@ configMapGenerator:
   - name: filebeat-netflow-config
     files:
       - filebeat.yml=config/filebeat-netflow.yaml
+      - ilm-policy.json=config/ilm-policy.json

@@ -27,7 +27,10 @@ spec:
           volumeMounts:
             - name: filebeat-syslog-config
               mountPath: /usr/share/filebeat/filebeat.yml
-              subPath: filebeat-syslog.yml
+              subPath: filebeat.yml
+            - name: filebeat-syslog-config
+              mountPath: /usr/share/filebeat/ilm-policy.json
+              subPath: ilm-policy.json
             - name: filebeat-syslog-cert
               mountPath: /usr/share/filebeat/certs/
           env:

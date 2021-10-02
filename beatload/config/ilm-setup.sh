@@ -37,9 +37,9 @@ function putContent {
   fi
 }
 
-getContent "_ilm/policy/default-beats"
+getContent "_ilm/policy/default-norollover"
 if [ $? -eq 22 ] ; then
-  putContent "_ilm/policy/default-beats" '
+  putContent "_ilm/policy/default-norollover" '
   {
     "policy": {
       "phases": {
@@ -51,34 +51,18 @@ if [ $? -eq 22 ] ; then
             }
           }
         },
-        "delete": {
-          "min_age": "90d",
+        "warm": {
+          "min_age": "7d",
           "actions": {
-            "delete": {
-              "delete_searchable_snapshot": true
-            }
-          }
-        }
-      }
-    }
-  }'
-  if [ $? -ne 0 ] ; then 
-    echo "default-beats update failed"
-    exit 1
-  fi
-fi
-
-getContent "_ilm/policy/default-filebeat-netflow"
-if [ $? -eq 22 ] ; then
-  putContent "_ilm/policy/default-filebeat-netflow" '
-  {
-    "policy": {
-      "phases": {
-        "hot": {
-          "min_age": "0ms",
-          "actions": {
+            "forcemerge": {
+              "max_num_segments": 1
+            },
+            "readonly": {},
             "set_priority": {
-              "priority": 100
+              "priority": 50
+            },
+            "shrink": {
+              "number_of_shards": 1
             }
           }
         },
@@ -94,10 +78,112 @@ if [ $? -eq 22 ] ; then
     }
   }'
   if [ $? -ne 0 ] ; then 
-    echo "default-filebeat-netflow update failed"
+    echo "default-beats update failed"
     exit 1
   fi
 fi
+
+
+
+getContent "_ilm/policy/default-rollover"
+if [ $? -eq 22 ] ; then
+  putContent "_ilm/policy/default-rollover" '
+  {
+    "policy": {
+      "phases": {
+        "hot": {
+          "min_age": "0ms",
+          "actions": {
+            "rollover": {
+              "max_primary_shard_size": "20gb",
+              "max_age": "7d"
+            },
+            "set_priority": {
+              "priority": 100
+            }
+          }
+        },
+        "warm": {
+          "min_age": "7d",
+          "actions": {
+            "forcemerge": {
+              "max_num_segments": 1
+            },
+            "readonly": {},
+            "set_priority": {
+              "priority": 50
+            },
+            "shrink": {
+              "number_of_shards": 1
+            }
+          }
+        },
+        "delete": {
+          "min_age": "30d",
+          "actions": {
+            "delete": {
+              "delete_searchable_snapshot": true
+            }
+          }
+        }
+      }
+    }
+  }'
+  if [ $? -ne 0 ] ; then 
+    echo "default-beats update failed"
+    exit 1
+  fi
+fi
+
+# getContent "_ilm/policy/default-filebeat-netflow"
+# if [ $? -eq 22 ] ; then
+#   putContent "_ilm/policy/default-filebeat-netflow" '
+#   {
+#     "policy": {
+#       "phases": {
+#         "hot": {
+#           "min_age": "0ms",
+#           "actions": {
+#             "rollover": {
+#               "max_primary_shard_size": "20gb",
+#               "max_age": "7d"
+#             },
+#             "set_priority": {
+#               "priority": 100
+#             }
+#           }
+#         },
+#         "warm": {
+#           "min_age": "7d",
+#           "actions": {
+#             "forcemerge": {
+#               "max_num_segments": 1
+#             },
+#             "readonly": {},
+#             "set_priority": {
+#               "priority": 50
+#             },
+#             "shrink": {
+#               "number_of_shards": 1
+#             }
+#           }
+#         },
+#         "delete": {
+#           "min_age": "7d",
+#           "actions": {
+#             "delete": {
+#               "delete_searchable_snapshot": true
+#             }
+#           }
+#         }
+#       }
+#     }
+#   }'
+#   if [ $? -ne 0 ] ; then 
+#     echo "default-filebeat-netflow update failed"
+#     exit 1
+#   fi
+# fi
 
 # getContent "_template/default-beats-map"
 # if [ $? -eq 22 ] ; then
