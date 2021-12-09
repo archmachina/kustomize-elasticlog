@@ -91,7 +91,7 @@ spec:
             - name: xpack.security.http.ssl.client_authentication
               value: optional
             - name: ES_JAVA_OPTS
-              value: "-Xms2g -Xmx2g"
+              value: "-Xms1g -Xmx1g"
           ports:
             - containerPort: 9200
           volumeMounts:
