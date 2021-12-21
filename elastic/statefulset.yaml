@@ -27,7 +27,7 @@ spec:
             name: elastic-usersetup
       initContainers:
         - name: user-setup
-          image: docker.elastic.co/elasticsearch/elasticsearch:7.14.2-amd64
+          image: docker.elastic.co/elasticsearch/elasticsearch:7.16.2-amd64
           command: ["sh", "-c", ". /usersetup.sh"]
           volumeMounts:
             - name: elastic-users
@@ -48,7 +48,7 @@ spec:
                   key: password
       containers:
         - name: elastic
-          image: docker.elastic.co/elasticsearch/elasticsearch:7.14.2-amd64
+          image: docker.elastic.co/elasticsearch/elasticsearch:7.16.2-amd64
           env:
             - name: cluster.name
               value: "elastic"

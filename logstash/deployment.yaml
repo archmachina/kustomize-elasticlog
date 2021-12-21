@@ -24,7 +24,7 @@ spec:
             name: logstash-pipeline-config
       containers:
         - name: logstash
-          image: docker.elastic.co/logstash/logstash:7.14.2-amd64
+          image: docker.elastic.co/logstash/logstash:7.16.2-amd64
           env:
             - name: ES_JAVA_OPTS
               value: "-Xms1g -Xmx1g"

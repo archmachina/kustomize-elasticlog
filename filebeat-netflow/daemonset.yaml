@@ -23,7 +23,7 @@ spec:
             name: filebeat-netflow-config
       containers:
         - name: filebeat-netflow
-          image: docker.elastic.co/beats/filebeat:7.14.2-amd64
+          image: docker.elastic.co/beats/filebeat:7.16.2-amd64
           volumeMounts:
             - name: filebeat-netflow-config
               mountPath: /usr/share/filebeat/filebeat.yml
