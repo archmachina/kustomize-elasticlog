@@ -6,6 +6,7 @@ resources:
   - ./filebeat-netflow
   - ./beatload
   - ./logstash
+  - ./ingress
 
 configurations:
   - config.yaml
@@ -271,3 +272,29 @@ patches:
                 env:
                   - name: ELASTIC_HOST
                     value: "$(ELASTIC_SVC)"
+  - patch: |-
+      apiVersion: apps/v1
+      kind: DaemonSet
+      metadata:
+        name: ingress-ds
+      spec:
+        template:
+          spec:
+            containers:
+              - name: ingress
+                env:
+                  - name: ELASTIC_HOST
+                    value: "$(ELASTIC_SVC)"
+  - patch: |-
+      apiVersion: apps/v1
+      kind: DaemonSet
+      metadata:
+        name: ingress-ds
+      spec:
+        template:
+          spec:
+            containers:
+              - name: ingress
+                env:
+                  - name: LOGSTASH_HOST
+                    value: "$(LOGSTASH_SVC)"
