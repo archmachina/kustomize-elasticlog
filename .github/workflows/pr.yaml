@@ -1,24 +1,22 @@
----
-name: main
+name: pr
 on:
-  workflow_dispatch:
   push:
-    branches:
-      - main
+    branches-ignore:
+      - "*"
   pull_request:
     branches:
       - main
 
 jobs:
-  Linting:
-    name: "Linting"
+  linting:
+    name: "linting"
     runs-on: ubuntu-latest
 
     steps:
       - name: Checkout
         uses: actions/checkout@v3
         with:
-          submodules: recursive
+          submodules: false
 
       - name: Python 3
         uses: actions/setup-python@v3
@@ -32,15 +30,15 @@ jobs:
         run: |
           yamllint -f standard .
 
-  Kustomize:
-    name: "Kustomize"
+  kustomize:
+    name: "kustomize"
     runs-on: ubuntu-latest
 
     steps:
       - name: Checkout
         uses: actions/checkout@v3
         with:
-          submodules: recursive
+          submodules: false
 
       - name: kustomize
         run: kustomize build .
