@@ -1,1 +1,1 @@
-# k8s-elasticlog
+# kustomize-elasticlog
