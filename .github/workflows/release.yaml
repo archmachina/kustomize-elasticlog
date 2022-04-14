@@ -1,14 +1,13 @@
 ---
-name: latest
+name: release
 on:
-  workflow_dispatch:
   push:
-    branches:
-      - main
+    tags:
+      - "v*"
 
 jobs:
-  latest:
-    name: "latest"
+  release:
+    name: "release"
     runs-on: ubuntu-latest
 
     steps:
