@@ -307,3 +307,4 @@ configMapGenerator:
       - elastic_fqdn=elastic.local
       - kibana_fqdn=kibana.local
       - elastic_storage_class=local
+      - kibana_publicbaseurl=https://kibana.local:5601

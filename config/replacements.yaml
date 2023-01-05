@@ -66,3 +66,17 @@ replacements:
           name: elastic-ss
         fieldPaths:
           - spec.volumeClaimTemplates.0.spec.storageClassName
+  - source:
+      kind: ConfigMap
+      name: elasticlog-config
+      fieldPath: data.kibana_publicbaseurl
+    targets:
+      - select:
+          group: apps
+          version: v1
+          kind: Deployment
+          name: kibana-dp
+        fieldPaths:
+          - spec.template.spec.containers.[name=kibana].env.[name=SERVER_PUBLICBASEURL].value
+        options:
+          create: true
