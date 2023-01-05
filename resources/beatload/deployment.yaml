@@ -86,7 +86,7 @@ spec:
               mountPath: /ilm-setup.sh
               subPath: ilm-setup.sh
         - name: filebeat-load
-          image: docker.elastic.co/beats/filebeat:7.16.2-amd64
+          image: docker.elastic.co/beats/filebeat:7.17.8-amd64
           command: ['/usr/share/filebeat/filebeat']
           args:
             - "setup"
@@ -131,7 +131,7 @@ spec:
               mountPath: /usr/share/filebeat/ilm-policy.json
               subPath: ilm-policy.json
         - name: filebeat-load-dashboard
-          image: docker.elastic.co/beats/filebeat:7.16.2-amd64
+          image: docker.elastic.co/beats/filebeat:7.17.8-amd64
           command: ['/usr/share/filebeat/filebeat']
           args:
             - "setup"
@@ -176,7 +176,7 @@ spec:
               mountPath: /usr/share/filebeat/ilm-policy.json
               subPath: ilm-policy.json
         - name: metricbeat-load
-          image: docker.elastic.co/beats/metricbeat:7.16.2-amd64
+          image: docker.elastic.co/beats/metricbeat:7.17.8-amd64
           command: ['/usr/share/metricbeat/metricbeat']
           args:
             - "setup"
@@ -221,7 +221,7 @@ spec:
               mountPath: /usr/share/metricbeat/ilm-policy.json
               subPath: ilm-policy.json
         - name: metricbeat-load-dashboard
-          image: docker.elastic.co/beats/metricbeat:7.16.2-amd64
+          image: docker.elastic.co/beats/metricbeat:7.17.8-amd64
           command: ['/usr/share/metricbeat/metricbeat']
           args:
             - "setup"
@@ -266,7 +266,7 @@ spec:
               mountPath: /usr/share/metricbeat/ilm-policy.json
               subPath: ilm-policy.json
         - name: auditbeat-load
-          image: docker.elastic.co/beats/auditbeat:7.16.2-amd64
+          image: docker.elastic.co/beats/auditbeat:7.17.8-amd64
           command: ['/usr/share/auditbeat/auditbeat']
           args:
             - "setup"
@@ -311,7 +311,7 @@ spec:
               mountPath: /usr/share/auditbeat/ilm-policy.json
               subPath: ilm-policy.json
         - name: auditbeat-load-dashboard
-          image: docker.elastic.co/beats/auditbeat:7.16.2-amd64
+          image: docker.elastic.co/beats/auditbeat:7.17.8-amd64
           command: ['/usr/share/auditbeat/auditbeat']
           args:
             - "setup"
