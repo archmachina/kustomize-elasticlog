@@ -16,10 +16,3 @@ secretGenerator:
     type: Opaque
   - name: logstash-cert
     type: Opaque
-
-vars:
-  - name: LOGSTASH_SVC
-    objref:
-      kind: Service
-      name: logstash-svc
-      apiVersion: v1

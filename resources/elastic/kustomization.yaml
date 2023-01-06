@@ -11,11 +11,6 @@ vars:
       kind: Service
       name: elastic-svc
       apiVersion: v1
-  - name: ELASTIC_SS
-    objref:
-      kind: StatefulSet
-      apiVersion: apps/v1
-      name: elastic-ss
 
 configMapGenerator:
   - name: elastic-usersetup

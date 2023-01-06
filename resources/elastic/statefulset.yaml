@@ -7,7 +7,7 @@ metadata:
     component: elastic
 spec:
   serviceName: "elastic-svc"
-  replicas: 3
+  replicas: 1
   selector:
     matchLabels:
       component: elastic
@@ -27,7 +27,7 @@ spec:
             name: elastic-usersetup
       initContainers:
         - name: user-setup
-          image: docker.elastic.co/elasticsearch/elasticsearch:7.16.2-amd64
+          image: docker.elastic.co/elasticsearch/elasticsearch:7.17.8-amd64
           command: ["sh", "-c", ". /usersetup.sh"]
           volumeMounts:
             - name: elastic-users
@@ -53,12 +53,9 @@ spec:
             - name: cluster.name
               value: "elastic"
             - name: cluster.initial_master_nodes
-              value: "$(ELASTIC_SS)-0,$(ELASTIC_SS)-1,$(ELASTIC_SS)-2"
+              value: "elastic-ss-0,elastic-ss-1,elastic-ss-2"
             - name: discovery.seed_hosts
-              value: >
-                $(ELASTIC_SS)-0.$(ELASTIC_SVC),
-                $(ELASTIC_SS)-1.$(ELASTIC_SVC),
-                $(ELASTIC_SS)-2.$(ELASTIC_SVC)
+              value: "elastic-ss-0.elastic-svc,elastic-ss-1.elastic-svc,elastic-ss-2.elastic-svc"
             - name: transport.port
               value: "9300"
             - name: transport.host

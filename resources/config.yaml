@@ -1,4 +1,0 @@
----
-varReference:
-  - kind: Ingress
-    path: spec/rules/http/paths/backend/service/name

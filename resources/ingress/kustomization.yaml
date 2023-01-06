@@ -2,9 +2,6 @@
 resources:
   - daemonset.yaml
 
-configurations:
-  - config.yaml
-
 commonLabels:
   app: ingress
 namespace: ingress
