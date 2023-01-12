@@ -4,8 +4,6 @@ resources:
   - daemonset.yaml
 
 secretGenerator:
-  - name: filebeat-syslog-elastic-cred
-    type: Opaque
   - name: filebeat-syslog-cert
     type: Opaque
 

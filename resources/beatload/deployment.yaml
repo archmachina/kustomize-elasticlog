@@ -23,11 +23,11 @@ spec:
           secret:
             secretName: beatload-cert
       initContainers:
-        - name: conn-check
-          image: curlimages/curl
-          command: ['sh']
+        - name: wait
+          image: archmachina/pyapiutil
+          command: ['python3']
           args:
-            - "/conn-check.sh"
+            - "/wait.py"
           env:
             - name: ELASTIC_HOST
               value: "elastic-svc"
@@ -40,53 +40,29 @@ spec:
             - name: ELASTIC_USERNAME
               valueFrom:
                 secretKeyRef:
-                  name: beatload-cred
-                  key: username
+                  name: elastic-credentials
+                  key: localadmin_username
             - name: ELASTIC_PASSWORD
               valueFrom:
                 secretKeyRef:
-                  name: beatload-cred
-                  key: password
+                  name: elastic-credentials
+                  key: localadmin_password
             - name: KIBANA_USERNAME
               valueFrom:
                 secretKeyRef:
-                  name: beatload-cred
-                  key: username
+                  name: elastic-credentials
+                  key: localadmin_username
             - name: KIBANA_PASSWORD
               valueFrom:
                 secretKeyRef:
-                  name: beatload-cred
-                  key: password
+                  name: elastic-credentials
+                  key: localadmin_password
           volumeMounts:
             - name: beatload-config
-              mountPath: /conn-check.sh
-              subPath: conn-check.sh
-        - name: ilm-setup
-          image: curlimages/curl
-          command: ['sh']
-          args:
-            - "/ilm-setup.sh"
-          env:
-            - name: ELASTIC_HOST
-              value: "elastic-svc"
-            - name: ELASTIC_PORT
-              value: "9200"
-            - name: ELASTIC_USERNAME
-              valueFrom:
-                secretKeyRef:
-                  name: beatload-cred
-                  key: username
-            - name: ELASTIC_PASSWORD
-              valueFrom:
-                secretKeyRef:
-                  name: beatload-cred
-                  key: password
-          volumeMounts:
-            - name: beatload-config
-              mountPath: /ilm-setup.sh
-              subPath: ilm-setup.sh
+              mountPath: /wait.py
+              subPath: wait.py
         - name: filebeat-load
-          image: docker.elastic.co/beats/filebeat:7.17.8-amd64
+          image: docker.elastic.co/beats/filebeat:8.5.3-amd64
           command: ['/usr/share/filebeat/filebeat']
           args:
             - "setup"
@@ -104,23 +80,23 @@ spec:
             - name: ELASTIC_USERNAME
               valueFrom:
                 secretKeyRef:
-                  name: beatload-cred
-                  key: username
+                  name: elastic-credentials
+                  key: localadmin_username
             - name: ELASTIC_PASSWORD
               valueFrom:
                 secretKeyRef:
-                  name: beatload-cred
-                  key: password
+                  name: elastic-credentials
+                  key: localadmin_password
             - name: KIBANA_USERNAME
               valueFrom:
                 secretKeyRef:
-                  name: beatload-cred
-                  key: username
+                  name: elastic-credentials
+                  key: localadmin_username
             - name: KIBANA_PASSWORD
               valueFrom:
                 secretKeyRef:
-                  name: beatload-cred
-                  key: password
+                  name: elastic-credentials
+                  key: localadmin_password
           volumeMounts:
             - name: beatload-cert
               mountPath: /usr/share/filebeat/certs
@@ -131,7 +107,7 @@ spec:
               mountPath: /usr/share/filebeat/ilm-policy.json
               subPath: ilm-policy.json
         - name: filebeat-load-dashboard
-          image: docker.elastic.co/beats/filebeat:7.17.8-amd64
+          image: docker.elastic.co/beats/filebeat:8.5.3-amd64
           command: ['/usr/share/filebeat/filebeat']
           args:
             - "setup"
@@ -149,23 +125,23 @@ spec:
             - name: ELASTIC_USERNAME
               valueFrom:
                 secretKeyRef:
-                  name: beatload-cred
-                  key: username
+                  name: elastic-credentials
+                  key: localadmin_username
             - name: ELASTIC_PASSWORD
               valueFrom:
                 secretKeyRef:
-                  name: beatload-cred
-                  key: password
+                  name: elastic-credentials
+                  key: localadmin_password
             - name: KIBANA_USERNAME
               valueFrom:
                 secretKeyRef:
-                  name: beatload-cred
-                  key: username
+                  name: elastic-credentials
+                  key: localadmin_username
             - name: KIBANA_PASSWORD
               valueFrom:
                 secretKeyRef:
-                  name: beatload-cred
-                  key: password
+                  name: elastic-credentials
+                  key: localadmin_password
           volumeMounts:
             - name: beatload-cert
               mountPath: /usr/share/filebeat/certs
@@ -176,7 +152,7 @@ spec:
               mountPath: /usr/share/filebeat/ilm-policy.json
               subPath: ilm-policy.json
         - name: metricbeat-load
-          image: docker.elastic.co/beats/metricbeat:7.17.8-amd64
+          image: docker.elastic.co/beats/metricbeat:8.5.3-amd64
           command: ['/usr/share/metricbeat/metricbeat']
           args:
             - "setup"
@@ -194,23 +170,23 @@ spec:
             - name: ELASTIC_USERNAME
               valueFrom:
                 secretKeyRef:
-                  name: beatload-cred
-                  key: username
+                  name: elastic-credentials
+                  key: localadmin_username
             - name: ELASTIC_PASSWORD
               valueFrom:
                 secretKeyRef:
-                  name: beatload-cred
-                  key: password
+                  name: elastic-credentials
+                  key: localadmin_password
             - name: KIBANA_USERNAME
               valueFrom:
                 secretKeyRef:
-                  name: beatload-cred
-                  key: username
+                  name: elastic-credentials
+                  key: localadmin_username
             - name: KIBANA_PASSWORD
               valueFrom:
                 secretKeyRef:
-                  name: beatload-cred
-                  key: password
+                  name: elastic-credentials
+                  key: localadmin_password
           volumeMounts:
             - name: beatload-cert
               mountPath: /usr/share/metricbeat/certs
@@ -221,7 +197,7 @@ spec:
               mountPath: /usr/share/metricbeat/ilm-policy.json
               subPath: ilm-policy.json
         - name: metricbeat-load-dashboard
-          image: docker.elastic.co/beats/metricbeat:7.17.8-amd64
+          image: docker.elastic.co/beats/metricbeat:8.5.3-amd64
           command: ['/usr/share/metricbeat/metricbeat']
           args:
             - "setup"
@@ -239,23 +215,23 @@ spec:
             - name: ELASTIC_USERNAME
               valueFrom:
                 secretKeyRef:
-                  name: beatload-cred
-                  key: username
+                  name: elastic-credentials
+                  key: localadmin_username
             - name: ELASTIC_PASSWORD
               valueFrom:
                 secretKeyRef:
-                  name: beatload-cred
-                  key: password
+                  name: elastic-credentials
+                  key: localadmin_password
             - name: KIBANA_USERNAME
               valueFrom:
                 secretKeyRef:
-                  name: beatload-cred
-                  key: username
+                  name: elastic-credentials
+                  key: localadmin_username
             - name: KIBANA_PASSWORD
               valueFrom:
                 secretKeyRef:
-                  name: beatload-cred
-                  key: password
+                  name: elastic-credentials
+                  key: localadmin_password
           volumeMounts:
             - name: beatload-cert
               mountPath: /usr/share/metricbeat/certs
@@ -266,7 +242,7 @@ spec:
               mountPath: /usr/share/metricbeat/ilm-policy.json
               subPath: ilm-policy.json
         - name: auditbeat-load
-          image: docker.elastic.co/beats/auditbeat:7.17.8-amd64
+          image: docker.elastic.co/beats/auditbeat:8.5.3-amd64
           command: ['/usr/share/auditbeat/auditbeat']
           args:
             - "setup"
@@ -284,23 +260,23 @@ spec:
             - name: ELASTIC_USERNAME
               valueFrom:
                 secretKeyRef:
-                  name: beatload-cred
-                  key: username
+                  name: elastic-credentials
+                  key: localadmin_username
             - name: ELASTIC_PASSWORD
               valueFrom:
                 secretKeyRef:
-                  name: beatload-cred
-                  key: password
+                  name: elastic-credentials
+                  key: localadmin_password
             - name: KIBANA_USERNAME
               valueFrom:
                 secretKeyRef:
-                  name: beatload-cred
-                  key: username
+                  name: elastic-credentials
+                  key: localadmin_username
             - name: KIBANA_PASSWORD
               valueFrom:
                 secretKeyRef:
-                  name: beatload-cred
-                  key: password
+                  name: elastic-credentials
+                  key: localadmin_password
           volumeMounts:
             - name: beatload-cert
               mountPath: /usr/share/auditbeat/certs
@@ -311,7 +287,7 @@ spec:
               mountPath: /usr/share/auditbeat/ilm-policy.json
               subPath: ilm-policy.json
         - name: auditbeat-load-dashboard
-          image: docker.elastic.co/beats/auditbeat:7.17.8-amd64
+          image: docker.elastic.co/beats/auditbeat:8.5.3-amd64
           command: ['/usr/share/auditbeat/auditbeat']
           args:
             - "setup"
@@ -329,23 +305,23 @@ spec:
             - name: ELASTIC_USERNAME
               valueFrom:
                 secretKeyRef:
-                  name: beatload-cred
-                  key: username
+                  name: elastic-credentials
+                  key: localadmin_username
             - name: ELASTIC_PASSWORD
               valueFrom:
                 secretKeyRef:
-                  name: beatload-cred
-                  key: password
+                  name: elastic-credentials
+                  key: localadmin_password
             - name: KIBANA_USERNAME
               valueFrom:
                 secretKeyRef:
-                  name: beatload-cred
-                  key: username
+                  name: elastic-credentials
+                  key: localadmin_username
             - name: KIBANA_PASSWORD
               valueFrom:
                 secretKeyRef:
-                  name: beatload-cred
-                  key: password
+                  name: elastic-credentials
+                  key: localadmin_password
           volumeMounts:
             - name: beatload-cert
               mountPath: /usr/share/auditbeat/certs

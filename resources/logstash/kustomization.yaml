@@ -12,7 +12,5 @@ configMapGenerator:
       - config/0201_output_beats.conf
 
 secretGenerator:
-  - name: logstash-elastic-cred
-    type: Opaque
   - name: logstash-cert
     type: Opaque

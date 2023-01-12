@@ -4,17 +4,12 @@ resources:
   - service.yaml
   - statefulset.yaml
   - ingress.yaml
-
-vars:
-  - name: ELASTIC_SVC
-    objref:
-      kind: Service
-      name: elastic-svc
-      apiVersion: v1
+  - deployment.yaml
 
 configMapGenerator:
-  - name: elastic-usersetup
+  - name: elastic-config
     files:
+      - config.py=config/config.py
       - usersetup.sh=config/usersetup.sh
 
 secretGenerator:
@@ -22,3 +17,11 @@ secretGenerator:
     type: Opaque
   - name: elastic-cert
     type: kubernetes.io/tls
+  - name: elastic-credentials
+    type: Opaque
+    literals:
+      - localadmin_username=localadmin
+      - logstash_system_password=""
+      - beats_system_password=""
+      - filebeat_username=filebeat_writer
+      - logstash_username=logstash_writer

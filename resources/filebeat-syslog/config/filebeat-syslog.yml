@@ -66,14 +66,6 @@ output.elasticsearch:
   protocol: https
   ssl.enabled: true
 
-# output.logstash:
-#   enabled: true
-#   hosts: ["${LOGSTASH_HOST}:${LOGSTASH_PORT}"]
-#   index: "filebeat-syslog"
-  # ssl.enabled: true
-  # ssl.certificate_authorities:
-  #   - "/usr/share/filebeat/certs/ca.crt"
-
 filebeat.inputs:
   - type: syslog
     protocol.udp:

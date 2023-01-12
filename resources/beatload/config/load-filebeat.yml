@@ -3,7 +3,7 @@
 setup.template.enabled: true
 setup.template.type: index
 setup.template.name: "filebeat-%{[agent.version]}"
-setup.template.pattern: "filebeat-%{[agent.version]}-*"
+setup.template.pattern: "filebeat-%{[agent.version]}*"
 setup.template.overwrite: false
 setup.template.settings:
   index.number_of_shards: 1

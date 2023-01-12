@@ -22,33 +22,33 @@ spec:
             secretName: elastic-cert
         - name: elastic-users
           emptyDir: {}
-        - name: elastic-usersetup
+        - name: elastic-config
           configMap:
-            name: elastic-usersetup
+            name: elastic-config
       initContainers:
         - name: user-setup
-          image: docker.elastic.co/elasticsearch/elasticsearch:7.17.8-amd64
+          image: docker.elastic.co/elasticsearch/elasticsearch:8.5.3-amd64
           command: ["sh", "-c", ". /usersetup.sh"]
           volumeMounts:
             - name: elastic-users
               mountPath: /usr/share/elasticsearch/config
-            - name: elastic-usersetup
+            - name: elastic-config
               subPath: usersetup.sh
               mountPath: /usersetup.sh
           env:
-            - name: ELASTIC_LOCAL_USERNAME
+            - name: LOCALADMIN_USERNAME
               valueFrom:
                 secretKeyRef:
-                  name: elastic-password
-                  key: username
-            - name: ELASTIC_LOCAL_PASSWORD
+                  name: elastic-credentials
+                  key: localadmin_username
+            - name: LOCALADMIN_PASSWORD
               valueFrom:
                 secretKeyRef:
-                  name: elastic-password
-                  key: password
+                  name: elastic-credentials
+                  key: localadmin_password
       containers:
         - name: elastic
-          image: docker.elastic.co/elasticsearch/elasticsearch:7.17.8-amd64
+          image: docker.elastic.co/elasticsearch/elasticsearch:8.5.3-amd64
           env:
             - name: cluster.name
               value: "elastic"
@@ -63,8 +63,8 @@ spec:
             - name: ELASTIC_PASSWORD
               valueFrom:
                 secretKeyRef:
-                  name: elastic-password
-                  key: password
+                  name: elastic-credentials
+                  key: elastic_password
             - name: xpack.security.enabled
               value: "true"
             - name: xpack.security.transport.ssl.enabled

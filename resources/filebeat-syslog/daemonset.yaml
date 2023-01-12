@@ -23,7 +23,7 @@ spec:
             name: filebeat-syslog-config
       containers:
         - name: filebeat-syslog
-          image: docker.elastic.co/beats/filebeat:7.17.8-amd64
+          image: docker.elastic.co/beats/filebeat:8.5.3-amd64
           volumeMounts:
             - name: filebeat-syslog-config
               mountPath: /usr/share/filebeat/filebeat.yml
@@ -41,17 +41,13 @@ spec:
             - name: ELASTIC_USERNAME
               valueFrom:
                 secretKeyRef:
-                  name: filebeat-syslog-elastic-cred
-                  key: username
+                  name: elastic-credentials
+                  key: filebeat_username
             - name: ELASTIC_PASSWORD
               valueFrom:
                 secretKeyRef:
-                  name: filebeat-syslog-elastic-cred
-                  key: password
-            - name: LOGSTASH_HOST
-              value: "logstash-svc"
-            - name: LOGSTASH_PORT
-              value: "5044"
+                  name: elastic-credentials
+                  key: filebeat_password
           ports:
             - name: "tcp-9000"
               protocol: TCP

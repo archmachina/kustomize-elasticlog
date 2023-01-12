@@ -4,8 +4,6 @@ resources:
   - daemonset.yaml
 
 secretGenerator:
-  - name: filebeat-netflow-elastic-cred
-    type: Opaque
   - name: filebeat-netflow-cert
     type: Opaque
 
