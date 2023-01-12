@@ -17,6 +17,8 @@ secretGenerator:
     type: Opaque
   - name: elastic-cert
     type: kubernetes.io/tls
+  - name: elastic-ca-cert
+    type: Opaque
   - name: elastic-credentials
     type: Opaque
     literals:

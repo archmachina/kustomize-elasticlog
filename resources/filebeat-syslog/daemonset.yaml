@@ -15,9 +15,9 @@ spec:
         component: filebeat-syslog
     spec:
       volumes:
-        - name: filebeat-syslog-cert
+        - name: elastic-ca-cert
           secret:
-            secretName: filebeat-syslog-cert
+            secretName: elastic-ca-cert
         - name: filebeat-syslog-config
           configMap:
             name: filebeat-syslog-config
@@ -31,7 +31,7 @@ spec:
             - name: filebeat-syslog-config
               mountPath: /usr/share/filebeat/ilm-policy.json
               subPath: ilm-policy.json
-            - name: filebeat-syslog-cert
+            - name: elastic-ca-cert
               mountPath: /usr/share/filebeat/certs/
           env:
             - name: ELASTIC_HOST

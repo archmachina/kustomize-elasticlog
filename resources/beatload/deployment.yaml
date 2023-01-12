@@ -19,9 +19,9 @@ spec:
         - name: beatload-config
           configMap:
             name: beatload-config
-        - name: beatload-cert
+        - name: elastic-ca-cert
           secret:
-            secretName: beatload-cert
+            secretName: elastic-ca-cert
       initContainers:
         - name: wait
           image: archmachina/pyapiutil
@@ -98,7 +98,7 @@ spec:
                   name: elastic-credentials
                   key: localadmin_password
           volumeMounts:
-            - name: beatload-cert
+            - name: elastic-ca-cert
               mountPath: /usr/share/filebeat/certs
             - name: beatload-config
               mountPath: /usr/share/filebeat/filebeat.yml
@@ -143,7 +143,7 @@ spec:
                   name: elastic-credentials
                   key: localadmin_password
           volumeMounts:
-            - name: beatload-cert
+            - name: elastic-ca-cert
               mountPath: /usr/share/filebeat/certs
             - name: beatload-config
               mountPath: /usr/share/filebeat/filebeat.yml
@@ -188,7 +188,7 @@ spec:
                   name: elastic-credentials
                   key: localadmin_password
           volumeMounts:
-            - name: beatload-cert
+            - name: elastic-ca-cert
               mountPath: /usr/share/metricbeat/certs
             - name: beatload-config
               mountPath: /usr/share/metricbeat/metricbeat.yml
@@ -233,7 +233,7 @@ spec:
                   name: elastic-credentials
                   key: localadmin_password
           volumeMounts:
-            - name: beatload-cert
+            - name: elastic-ca-cert
               mountPath: /usr/share/metricbeat/certs
             - name: beatload-config
               mountPath: /usr/share/metricbeat/metricbeat.yml
@@ -278,7 +278,7 @@ spec:
                   name: elastic-credentials
                   key: localadmin_password
           volumeMounts:
-            - name: beatload-cert
+            - name: elastic-ca-cert
               mountPath: /usr/share/auditbeat/certs
             - name: beatload-config
               mountPath: /usr/share/auditbeat/auditbeat.yml
@@ -323,7 +323,7 @@ spec:
                   name: elastic-credentials
                   key: localadmin_password
           volumeMounts:
-            - name: beatload-cert
+            - name: elastic-ca-cert
               mountPath: /usr/share/auditbeat/certs
             - name: beatload-config
               mountPath: /usr/share/auditbeat/auditbeat.yml
