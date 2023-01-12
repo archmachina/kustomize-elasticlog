@@ -109,7 +109,7 @@ class SessionConfig:
       self.elastic_port = int(port)
     except Exception as e:
       raise Exception('Could not parse elastic_port: %s' % e)
-    
+
     self.elastic_uri = ""
     uri = os.environ.get('ELASTIC_URI')
     if uri is not None and uri != "":
@@ -117,7 +117,7 @@ class SessionConfig:
 
     if self.elastic_uri is None or self.elastic_uri == "":
       self.elastic_uri = ("https://%s:%s/" % (self.elastic_host, self.elastic_port))
-    
+
     self.elastic_auth = (self.elastic_username, self.elastic_password)
 
     # Configure requests session
