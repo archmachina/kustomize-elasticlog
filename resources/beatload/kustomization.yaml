@@ -10,7 +10,6 @@ secretGenerator:
 configMapGenerator:
   - name: beatload-config
     files:
-      - wait.py=config/wait.py
       - auditbeat.yml=config/load-auditbeat.yml
       - filebeat.yml=config/load-filebeat.yml
       - metricbeat.yml=config/load-metricbeat.yml

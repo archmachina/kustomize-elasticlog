@@ -24,19 +24,18 @@ spec:
             secretName: elastic-ca-cert
       initContainers:
         - name: wait
-          image: archmachina/pyapiutil
-          command: ['python3']
-          args:
-            - "/wait.py"
+          image: archmachina/elasticwait:0.1.2
           env:
+            - name: CERT_VERIFY
+              value: "0"
+            - name: TIME_WAIT
+              value: "30"
+            - name: MAX_ATTEMPTS
+              value: "60"
             - name: ELASTIC_HOST
               value: "elastic-svc"
             - name: ELASTIC_PORT
               value: "9200"
-            - name: KIBANA_HOST
-              value: "kibana-svc"
-            - name: KIBANA_PORT
-              value: "5601"
             - name: ELASTIC_USERNAME
               valueFrom:
                 secretKeyRef:
@@ -47,6 +46,10 @@ spec:
                 secretKeyRef:
                   name: elastic-credentials
                   key: localadmin_password
+            - name: KIBANA_HOST
+              value: "kibana-svc"
+            - name: KIBANA_PORT
+              value: "5601"
             - name: KIBANA_USERNAME
               valueFrom:
                 secretKeyRef:
@@ -57,10 +60,6 @@ spec:
                 secretKeyRef:
                   name: elastic-credentials
                   key: localadmin_password
-          volumeMounts:
-            - name: beatload-config
-              mountPath: /wait.py
-              subPath: wait.py
         - name: filebeat-load
           image: docker.elastic.co/beats/filebeat:8.5.3-amd64
           command: ['/usr/share/filebeat/filebeat']
