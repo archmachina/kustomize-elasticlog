@@ -10,6 +10,8 @@ configMapGenerator:
   - name: elastic-config
     files:
       - config.py=config/config.py
+  - name: elastic-usersetup
+    files:
       - usersetup.sh=config/usersetup.sh
 
 secretGenerator:

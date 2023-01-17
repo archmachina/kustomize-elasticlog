@@ -22,9 +22,9 @@ spec:
             secretName: elastic-cert
         - name: elastic-users
           emptyDir: {}
-        - name: elastic-config
+        - name: elastic-usersetup
           configMap:
-            name: elastic-config
+            name: elastic-usersetup
       initContainers:
         - name: user-setup
           image: docker.elastic.co/elasticsearch/elasticsearch:8.5.3-amd64
@@ -32,7 +32,7 @@ spec:
           volumeMounts:
             - name: elastic-users
               mountPath: /usr/share/elasticsearch/config
-            - name: elastic-config
+            - name: elastic-usersetup
               subPath: usersetup.sh
               mountPath: /usersetup.sh
           env:

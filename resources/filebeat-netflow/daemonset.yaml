@@ -24,6 +24,9 @@ spec:
       containers:
         - name: filebeat-netflow
           image: docker.elastic.co/beats/filebeat:8.5.3-amd64
+          args:
+            - "-v"
+            - "-e"
           volumeMounts:
             - name: filebeat-netflow-config
               mountPath: /usr/share/filebeat/filebeat.yml
@@ -39,12 +42,15 @@ spec:
             - name: ELASTIC_PORT
               value: "9200"
             - name: ELASTIC_USERNAME
-              value: "beats_system"
+              valueFrom:
+                secretKeyRef:
+                  name: elastic-credentials
+                  key: filebeat_username
             - name: ELASTIC_PASSWORD
               valueFrom:
                 secretKeyRef:
                   name: elastic-credentials
-                  key: beats_system_password
+                  key: filebeat_password
           ports:
             - name: "udp-2055"
               protocol: UDP

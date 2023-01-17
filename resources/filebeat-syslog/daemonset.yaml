@@ -24,6 +24,9 @@ spec:
       containers:
         - name: filebeat-syslog
           image: docker.elastic.co/beats/filebeat:8.5.3-amd64
+          args:
+            - "-v"
+            - "-e"
           volumeMounts:
             - name: filebeat-syslog-config
               mountPath: /usr/share/filebeat/filebeat.yml

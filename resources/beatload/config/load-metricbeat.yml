@@ -4,17 +4,14 @@ metricbeat.config.modules:
   reload.enabled: false
 
 setup.template.enabled: true
-setup.template.type: index
 setup.template.name: "metricbeat-%{[agent.version]}"
-setup.template.pattern: "metricbeat-%{[agent.version]}*"
+setup.template.pattern: "metricbeat-%{[agent.version]}"
 setup.template.overwrite: false
 setup.template.settings:
   index.number_of_shards: 1
   index.number_of_replicas: 1
 
 setup.ilm.enabled: true
-setup.ilm.rollover_alias: "metricbeat-%{[agent.version]}"
-setup.ilm.pattern: "{now/d}-000001"
 setup.ilm.policy_name: "metricbeat"
 setup.ilm.check_exists: true
 setup.ilm.overwrite: false
@@ -36,6 +33,9 @@ output.elasticsearch:
   password: "${ELASTIC_PASSWORD}"
   ssl.certificate_authorities:
     - "/usr/share/metricbeat/certs/ca.crt"
+  # The documentation mentions that enabling this will disable ILM, however filebeat logs
+  # show that ILM configuration is still performed. Additionally, without this, filebeat will just write
+  # to filebeat-(agent.version).
   index: "metricbeat-%{[agent.version]}"
   protocol: https
   ssl.enabled: true

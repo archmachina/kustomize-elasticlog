@@ -201,6 +201,18 @@ def set_user(session, name, content, update=False):
       raise Exception('Failed to update user - created field missing')
 
 #
+# set_cluster_setting - Post JSON to the cluster setting sapi
+def set_cluster_setting(session, name, content):
+  setting_uri = session.elastic_uri + "_cluster/settings"
+
+  print('Updating cluster setting: %s' % name)
+  result = session.requestsSession.put(setting_uri, content)
+  debug_request_result(result)
+  result.raise_for_status()
+  if result.json()['acknowledged'] != True:
+    raise Exception('Failed to update cluster settings - not acknowledged')
+
+#
 # set_user_password - update the password for a user
 def set_user_password(session, name, password):
   user_uri = session.elastic_uri + "_security/user/" + name + "/_password"
@@ -314,6 +326,14 @@ def main():
     "roles": [ "superuser" ]
   }
   """ % json.dumps(filebeat_password), update=True)
+
+  set_cluster_setting(session, "auto_create_index", """{
+    "persistent": {
+      "action": {
+        "auto_create_index": "false"
+      }
+    }
+  }""")
 
 if __name__ == "__main__":
   main()

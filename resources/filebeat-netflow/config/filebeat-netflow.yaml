@@ -15,17 +15,14 @@ processors:
   - add_docker_metadata: ~
 
 setup.template.enabled: true
-setup.template.type: index
 setup.template.name: "filebeat-netflow-%{[agent.version]}"
-setup.template.pattern: "filebeat-netflow-%{[agent.version]}-*"
+setup.template.pattern: "filebeat-netflow-%{[agent.version]}"
 setup.template.overwrite: false
 setup.template.settings:
   index.number_of_shards: 1
   index.number_of_replicas: 1
 
 setup.ilm.enabled: true
-setup.ilm.rollover_alias: "filebeat-netflow-%{[agent.version]}"
-setup.ilm.pattern: "{now/d}-000001"
 setup.ilm.policy_name: "filebeat-netflow"
 setup.ilm.check_exists: true
 setup.ilm.overwrite: false
@@ -39,7 +36,10 @@ output.elasticsearch:
   ssl.certificate_authorities:
     - "/usr/share/filebeat/certs/ca.crt"
   loadbalance: true
-  index: "filebeat-netflow-%{[agent.version]}-%{+yyyy.MM.dd}"
+  # The documentation mentions that enabling this will disable ILM, however filebeat logs
+  # show that ILM configuration is still performed. Additionally, without this, filebeat will just write
+  # to filebeat-(agent.version).
+  index: "filebeat-netflow-%{[agent.version]}"
   protocol: https
   ssl.enabled: true
 
