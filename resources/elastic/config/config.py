@@ -128,9 +128,12 @@ class SessionConfig:
       "Content-Type": "application/json"
     }
 
+def log_msg(msg):
+  print(msg, flush=True)
+
 def debug_request_result(result):
-  print('Request Result: %s' % result.text)
-  print('Request Status Code: %s' % result.status_code)
+  log_msg('Request Result: %s' % result.text)
+  log_msg('Request Status Code: %s' % result.status_code)
 
 #
 # set_ilm_policy - Apply an ILM policy to the elastic environment
@@ -138,28 +141,28 @@ def set_ilm_policy(session, name, content, update=False):
   policy_uri = session.elastic_uri + "_ilm/policy/" + name
 
   # Check if the ILM policy exists
-  print('Checking for ILM policy: %s' % name)
+  log_msg('Checking for ILM policy: %s' % name)
   result = session.requestsSession.get(policy_uri)
   debug_request_result(result)
 
   # If the policy does not exist, create it
   if result.status_code == 404:
-    print('ILM policy not found. Creating.')
+    log_msg('ILM policy not found. Creating.')
     result = session.requestsSession.put(policy_uri, content)
     debug_request_result(result)
     result.raise_for_status()
     if result.json()['acknowledged'] != True:
       raise Exception('Failed to create ILM policy - acknowledgement missing')
-    print('Create for ILM policy successful.')
+    log_msg('Create for ILM policy successful.')
     return
 
   # Make sure we were successful
   result.raise_for_status()
-  print('ILM Policy found')
+  log_msg('ILM Policy found')
 
   # Status is not missing and not error, so the ILM policy exists. Update it here, if requested
   if update:
-    print('Updating ILM policy')
+    log_msg('Updating ILM policy')
     result = session.requestsSession.put(policy_uri, content)
     debug_request_result(result)
     result.raise_for_status()
@@ -172,28 +175,28 @@ def set_user(session, name, content, update=False):
   user_uri = session.elastic_uri + "_security/user/" + name
 
   # Check if the user exists
-  print('Checking for user: %s' % name)
+  log_msg('Checking for user: %s' % name)
   result = session.requestsSession.get(user_uri)
   debug_request_result(result)
 
   # If the user does not exist, create it
   if result.status_code == 404:
-    print('User not found. Creating.')
+    log_msg('User not found. Creating.')
     result = session.requestsSession.post(user_uri, content)
     debug_request_result(result)
     result.raise_for_status()
     if result.json()['created'] is None:
       raise Exception('Failed to create user - created field missing')
-    print('Create for user successful.')
+    log_msg('Create for user successful.')
     return
 
   # Make sure we were successful
   result.raise_for_status()
-  print('User found')
+  log_msg('User found')
 
   # Status is not missing and not error, so the user exists. Update it here, if requested
   if update:
-    print('Updating user')
+    log_msg('Updating user')
     result = session.requestsSession.put(user_uri, content)
     debug_request_result(result)
     result.raise_for_status()
@@ -205,7 +208,7 @@ def set_user(session, name, content, update=False):
 def set_cluster_setting(session, name, content):
   setting_uri = session.elastic_uri + "_cluster/settings"
 
-  print('Updating cluster setting: %s' % name)
+  log_msg('Updating cluster setting: %s' % name)
   result = session.requestsSession.put(setting_uri, content)
   debug_request_result(result)
   result.raise_for_status()
@@ -220,7 +223,7 @@ def set_user_password(session, name, password):
   if password is None or password == "":
     raise Exception('Missing password for user')
 
-  print('Updating user password: %s' % name)
+  log_msg('Updating user password: %s' % name)
   result = session.requestsSession.put(user_uri, """{ "password": %s }""" % json.dumps(password))
   debug_request_result(result)
   result.raise_for_status()
@@ -233,7 +236,7 @@ def wait_connection(session):
   attempt = 1
   while True:
     # Attempt to connect to the elastic environment
-    print('Elastic connection attempt: %s' % attempt)
+    log_msg('Elastic connection attempt: %s' % attempt)
     try:
       result = requests.get(check_uri, auth=session.elastic_auth, verify=False)
       debug_request_result(result)
@@ -242,7 +245,7 @@ def wait_connection(session):
       if result.ok and result.json()[0]['status'] == 'green':
         return
     except Exception as e:
-      print('Could not connect to elastic: %s' % e)
+      log_msg('Could not connect to elastic: %s' % e)
 
     # Break here if we have tried too many times
     attempt = attempt + 1
@@ -259,11 +262,11 @@ def main():
 
   # Session setup for connectivity to the elastic environment
   session = SessionConfig()
-  print('Elastic URI: %s' % session.elastic_uri)
-  print('Elastic Username: %s' % session.elastic_username)
+  log_msg('Elastic URI: %s' % session.elastic_uri)
+  log_msg('Elastic Username: %s' % session.elastic_username)
 
   # Wait for the elastic environment to become available
-  print('Starting wait for elastic environment')
+  log_msg('Starting wait for elastic environment')
   wait_connection(session)
 
   # Apply ILM policies to the environment

@@ -18,3 +18,5 @@ configMapGenerator:
       - kibana_fqdn=kibana.local
       - elastic_storage_class=local
       - kibana_publicbaseurl=https://kibana.local:5601
+      - elastic_initial_master_nodes=elastic-ss-0,elastic-ss-1,elastic-ss-2
+      - elastic_seed_hosts=elastic-ss-0.elastic-svc,elastic-ss-1.elastic-svc,elastic-ss-2.elastic-svc
