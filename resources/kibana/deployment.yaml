@@ -21,14 +21,14 @@ spec:
             secretName: kibana-cert
       initContainers:
         - name: wait
-          image: archmachina/elasticwait:0.1.2
+          image: archmachina/elasticwait:0.1.3
           env:
             - name: CERT_VERIFY
               value: "0"
             - name: TIME_WAIT
               value: "30"
             - name: MAX_ATTEMPTS
-              value: "60"
+              value: "15"
             - name: ELASTIC_HOST
               value: "elastic-svc"
             - name: ELASTIC_PORT

@@ -250,6 +250,10 @@ def wait_connection(session):
     # Break here if we have tried too many times
     attempt = attempt + 1
     if attempt > 30:
+      # If we've exhausted all attempts, but the status is still red or yellow,
+      # then return and attempt to perform the elastic configuration anyway.
+      if result.ok:
+        return
       raise Exception('Could not connect to elastic and exhausted attempts')
 
     # Wait 30 seconds before trying again

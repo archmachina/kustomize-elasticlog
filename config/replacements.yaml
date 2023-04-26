@@ -19,6 +19,18 @@ replacements:
   - source:
       kind: ConfigMap
       name: elasticlog-config
+      fieldPath: data.logstash_replicas
+    targets:
+      - select:
+          group: apps
+          version: v1
+          kind: Deployment
+          name: logstash-dp
+        fieldPaths:
+          - spec.replicas
+  - source:
+      kind: ConfigMap
+      name: elasticlog-config
       fieldPath: data.elastic_java_opts
     targets:
       - select:
