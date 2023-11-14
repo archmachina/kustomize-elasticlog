@@ -4,8 +4,13 @@ resources:
   - deployment.yaml
 
 secretGenerator:
-  - name: beatload-cert
+  - name: beatload-credentials
     type: Opaque
+    literals:
+      - elastic_username=changeme
+      - elastic_password=changeme
+      - kibana_username=changeme
+      - kibana_password=changeme
 
 configMapGenerator:
   - name: beatload-config

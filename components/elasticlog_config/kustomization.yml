@@ -1,8 +1,7 @@
 ---
-apiVersion: builtin
-kind: ReplacementTransformer
-metadata:
-  name: replacements
+
+kind: Component
+
 replacements:
   - source:
       kind: ConfigMap

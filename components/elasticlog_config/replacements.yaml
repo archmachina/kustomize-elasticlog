@@ -1,0 +1,5 @@
+---
+apiVersion: builtin
+kind: ReplacementTransformer
+metadata:
+  name: replacements

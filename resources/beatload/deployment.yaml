@@ -19,9 +19,6 @@ spec:
         - name: beatload-config
           configMap:
             name: beatload-config
-        - name: elastic-ca-cert
-          secret:
-            secretName: elastic-ca-cert
       initContainers:
         - name: wait
           image: archmachina/elasticwait:0.1.3
@@ -39,13 +36,13 @@ spec:
             - name: ELASTIC_USERNAME
               valueFrom:
                 secretKeyRef:
-                  name: elastic-credentials
-                  key: localadmin_username
+                  name: beatload-credentials
+                  key: elastic_username
             - name: ELASTIC_PASSWORD
               valueFrom:
                 secretKeyRef:
-                  name: elastic-credentials
-                  key: localadmin_password
+                  name: beatload-credentials
+                  key: elastic_password
             - name: KIBANA_HOST
               value: "kibana-svc"
             - name: KIBANA_PORT
@@ -53,13 +50,13 @@ spec:
             - name: KIBANA_USERNAME
               valueFrom:
                 secretKeyRef:
-                  name: elastic-credentials
-                  key: localadmin_username
+                  name: beatload-credentials
+                  key: kibana_username
             - name: KIBANA_PASSWORD
               valueFrom:
                 secretKeyRef:
-                  name: elastic-credentials
-                  key: localadmin_password
+                  name: beatload-credentials
+                  key: kibana_password
         - name: filebeat-load
           image: docker.elastic.co/beats/filebeat:8.5.3-amd64
           command: ['/usr/share/filebeat/filebeat']
@@ -79,26 +76,24 @@ spec:
             - name: ELASTIC_USERNAME
               valueFrom:
                 secretKeyRef:
-                  name: elastic-credentials
-                  key: localadmin_username
+                  name: beatload-credentials
+                  key: elastic_username
             - name: ELASTIC_PASSWORD
               valueFrom:
                 secretKeyRef:
-                  name: elastic-credentials
-                  key: localadmin_password
+                  name: beatload-credentials
+                  key: elastic_password
             - name: KIBANA_USERNAME
               valueFrom:
                 secretKeyRef:
-                  name: elastic-credentials
-                  key: localadmin_username
+                  name: beatload-credentials
+                  key: kibana_username
             - name: KIBANA_PASSWORD
               valueFrom:
                 secretKeyRef:
-                  name: elastic-credentials
-                  key: localadmin_password
+                  name: beatload-credentials
+                  key: kibana_password
           volumeMounts:
-            - name: elastic-ca-cert
-              mountPath: /usr/share/filebeat/certs
             - name: beatload-config
               mountPath: /usr/share/filebeat/filebeat.yml
               subPath: filebeat.yml
@@ -124,26 +119,24 @@ spec:
             - name: ELASTIC_USERNAME
               valueFrom:
                 secretKeyRef:
-                  name: elastic-credentials
-                  key: localadmin_username
+                  name: beatload-credentials
+                  key: elastic_username
             - name: ELASTIC_PASSWORD
               valueFrom:
                 secretKeyRef:
-                  name: elastic-credentials
-                  key: localadmin_password
+                  name: beatload-credentials
+                  key: elastic_password
             - name: KIBANA_USERNAME
               valueFrom:
                 secretKeyRef:
-                  name: elastic-credentials
-                  key: localadmin_username
+                  name: beatload-credentials
+                  key: kibana_username
             - name: KIBANA_PASSWORD
               valueFrom:
                 secretKeyRef:
-                  name: elastic-credentials
-                  key: localadmin_password
+                  name: beatload-credentials
+                  key: kibana_password
           volumeMounts:
-            - name: elastic-ca-cert
-              mountPath: /usr/share/filebeat/certs
             - name: beatload-config
               mountPath: /usr/share/filebeat/filebeat.yml
               subPath: filebeat.yml
@@ -169,26 +162,24 @@ spec:
             - name: ELASTIC_USERNAME
               valueFrom:
                 secretKeyRef:
-                  name: elastic-credentials
-                  key: localadmin_username
+                  name: beatload-credentials
+                  key: elastic_username
             - name: ELASTIC_PASSWORD
               valueFrom:
                 secretKeyRef:
-                  name: elastic-credentials
-                  key: localadmin_password
+                  name: beatload-credentials
+                  key: elastic_password
             - name: KIBANA_USERNAME
               valueFrom:
                 secretKeyRef:
-                  name: elastic-credentials
-                  key: localadmin_username
+                  name: beatload-credentials
+                  key: kibana_username
             - name: KIBANA_PASSWORD
               valueFrom:
                 secretKeyRef:
-                  name: elastic-credentials
-                  key: localadmin_password
+                  name: beatload-credentials
+                  key: kibana_password
           volumeMounts:
-            - name: elastic-ca-cert
-              mountPath: /usr/share/metricbeat/certs
             - name: beatload-config
               mountPath: /usr/share/metricbeat/metricbeat.yml
               subPath: metricbeat.yml
@@ -214,26 +205,24 @@ spec:
             - name: ELASTIC_USERNAME
               valueFrom:
                 secretKeyRef:
-                  name: elastic-credentials
-                  key: localadmin_username
+                  name: beatload-credentials
+                  key: elastic_username
             - name: ELASTIC_PASSWORD
               valueFrom:
                 secretKeyRef:
-                  name: elastic-credentials
-                  key: localadmin_password
+                  name: beatload-credentials
+                  key: elastic_password
             - name: KIBANA_USERNAME
               valueFrom:
                 secretKeyRef:
-                  name: elastic-credentials
-                  key: localadmin_username
+                  name: beatload-credentials
+                  key: kibana_username
             - name: KIBANA_PASSWORD
               valueFrom:
                 secretKeyRef:
-                  name: elastic-credentials
-                  key: localadmin_password
+                  name: beatload-credentials
+                  key: kibana_password
           volumeMounts:
-            - name: elastic-ca-cert
-              mountPath: /usr/share/metricbeat/certs
             - name: beatload-config
               mountPath: /usr/share/metricbeat/metricbeat.yml
               subPath: metricbeat.yml
@@ -259,26 +248,24 @@ spec:
             - name: ELASTIC_USERNAME
               valueFrom:
                 secretKeyRef:
-                  name: elastic-credentials
-                  key: localadmin_username
+                  name: beatload-credentials
+                  key: elastic_username
             - name: ELASTIC_PASSWORD
               valueFrom:
                 secretKeyRef:
-                  name: elastic-credentials
-                  key: localadmin_password
+                  name: beatload-credentials
+                  key: elastic_password
             - name: KIBANA_USERNAME
               valueFrom:
                 secretKeyRef:
-                  name: elastic-credentials
-                  key: localadmin_username
+                  name: beatload-credentials
+                  key: kibana_username
             - name: KIBANA_PASSWORD
               valueFrom:
                 secretKeyRef:
-                  name: elastic-credentials
-                  key: localadmin_password
+                  name: beatload-credentials
+                  key: kibana_password
           volumeMounts:
-            - name: elastic-ca-cert
-              mountPath: /usr/share/auditbeat/certs
             - name: beatload-config
               mountPath: /usr/share/auditbeat/auditbeat.yml
               subPath: auditbeat.yml
@@ -304,26 +291,24 @@ spec:
             - name: ELASTIC_USERNAME
               valueFrom:
                 secretKeyRef:
-                  name: elastic-credentials
-                  key: localadmin_username
+                  name: beatload-credentials
+                  key: elastic_username
             - name: ELASTIC_PASSWORD
               valueFrom:
                 secretKeyRef:
-                  name: elastic-credentials
-                  key: localadmin_password
+                  name: beatload-credentials
+                  key: elastic_password
             - name: KIBANA_USERNAME
               valueFrom:
                 secretKeyRef:
-                  name: elastic-credentials
-                  key: localadmin_username
+                  name: beatload-credentials
+                  key: kibana_username
             - name: KIBANA_PASSWORD
               valueFrom:
                 secretKeyRef:
-                  name: elastic-credentials
-                  key: localadmin_password
+                  name: beatload-credentials
+                  key: kibana_password
           volumeMounts:
-            - name: elastic-ca-cert
-              mountPath: /usr/share/auditbeat/certs
             - name: beatload-config
               mountPath: /usr/share/auditbeat/auditbeat.yml
               subPath: auditbeat.yml
