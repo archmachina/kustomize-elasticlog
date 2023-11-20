@@ -83,3 +83,20 @@ spec:
     name: elasticlog-ca-issuer
     kind: Issuer
     group: cert-manager.io
+---
+apiVersion: cert-manager.io/v1
+kind: Certificate
+metadata:
+  name: beatload-cert
+spec:
+  commonName: beatload
+  secretName: beatload-cert
+  duration: 2160h
+  renewBefore: 360h
+  dnsNames:
+    - beatload.local
+    - beatload-svc
+  issuerRef:
+    name: elasticlog-ca-issuer
+    kind: Issuer
+    group: cert-manager.io

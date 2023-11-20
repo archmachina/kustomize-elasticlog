@@ -155,24 +155,6 @@ replacements:
           name: kibana-cert
         fieldPaths:
           - spec.duration
-  - source:
-      kind: ConfigMap
-      name: elasticlog-cert-config
-      fieldPath: data.cert_renewBefore
-    targets:
-      - select:
-          group: cert-manager.io
-          version: v1
-          kind: Certificate
-          name: kibana-cert
-        fieldPaths:
-          - spec.renewBefore
-
-  - source:
-      kind: ConfigMap
-      name: elasticlog-cert-config
-      fieldPath: data.cert_duration
-    targets:
       - select:
           group: cert-manager.io
           version: v1
@@ -180,24 +162,6 @@ replacements:
           name: elastic-cert
         fieldPaths:
           - spec.duration
-  - source:
-      kind: ConfigMap
-      name: elasticlog-cert-config
-      fieldPath: data.cert_renewBefore
-    targets:
-      - select:
-          group: cert-manager.io
-          version: v1
-          kind: Certificate
-          name: elastic-cert
-        fieldPaths:
-          - spec.renewBefore
-
-  - source:
-      kind: ConfigMap
-      name: elasticlog-cert-config
-      fieldPath: data.cert_duration
-    targets:
       - select:
           group: cert-manager.io
           version: v1
@@ -205,24 +169,6 @@ replacements:
           name: filebeat-syslog-cert
         fieldPaths:
           - spec.duration
-  - source:
-      kind: ConfigMap
-      name: elasticlog-cert-config
-      fieldPath: data.cert_renewBefore
-    targets:
-      - select:
-          group: cert-manager.io
-          version: v1
-          kind: Certificate
-          name: filebeat-syslog-cert
-        fieldPaths:
-          - spec.renewBefore
-
-  - source:
-      kind: ConfigMap
-      name: elasticlog-cert-config
-      fieldPath: data.cert_duration
-    targets:
       - select:
           group: cert-manager.io
           version: v1
@@ -230,24 +176,6 @@ replacements:
           name: filebeat-netflow-cert
         fieldPaths:
           - spec.duration
-  - source:
-      kind: ConfigMap
-      name: elasticlog-cert-config
-      fieldPath: data.cert_renewBefore
-    targets:
-      - select:
-          group: cert-manager.io
-          version: v1
-          kind: Certificate
-          name: filebeat-netflow-cert
-        fieldPaths:
-          - spec.renewBefore
-
-  - source:
-      kind: ConfigMap
-      name: elasticlog-cert-config
-      fieldPath: data.cert_duration
-    targets:
       - select:
           group: cert-manager.io
           version: v1
@@ -255,24 +183,6 @@ replacements:
           name: logstash-cert
         fieldPaths:
           - spec.duration
-  - source:
-      kind: ConfigMap
-      name: elasticlog-cert-config
-      fieldPath: data.cert_renewBefore
-    targets:
-      - select:
-          group: cert-manager.io
-          version: v1
-          kind: Certificate
-          name: logstash-cert
-        fieldPaths:
-          - spec.renewBefore
-
-  - source:
-      kind: ConfigMap
-      name: elasticlog-cert-config
-      fieldPath: data.cert_duration
-    targets:
       - select:
           group: cert-manager.io
           version: v1
@@ -285,6 +195,41 @@ replacements:
       name: elasticlog-cert-config
       fieldPath: data.cert_renewBefore
     targets:
+      - select:
+          group: cert-manager.io
+          version: v1
+          kind: Certificate
+          name: kibana-cert
+        fieldPaths:
+          - spec.renewBefore
+      - select:
+          group: cert-manager.io
+          version: v1
+          kind: Certificate
+          name: elastic-cert
+        fieldPaths:
+          - spec.renewBefore
+      - select:
+          group: cert-manager.io
+          version: v1
+          kind: Certificate
+          name: filebeat-syslog-cert
+        fieldPaths:
+          - spec.renewBefore
+      - select:
+          group: cert-manager.io
+          version: v1
+          kind: Certificate
+          name: filebeat-netflow-cert
+        fieldPaths:
+          - spec.renewBefore
+      - select:
+          group: cert-manager.io
+          version: v1
+          kind: Certificate
+          name: logstash-cert
+        fieldPaths:
+          - spec.renewBefore
       - select:
           group: cert-manager.io
           version: v1
