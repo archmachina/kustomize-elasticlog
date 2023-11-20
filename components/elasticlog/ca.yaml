@@ -1,0 +1,33 @@
+---
+apiVersion: cert-manager.io/v1
+kind: Issuer
+metadata:
+  name: elasticlog-selfsigned-issuer
+spec:
+  selfSigned: {}
+---
+apiVersion: cert-manager.io/v1
+kind: Certificate
+metadata:
+  name: elasticlog-selfsigned-issuer-certificate
+spec:
+  isCA: true
+  commonName: elasticlog-selfsigned-issuer-certificate
+  secretName: elasticlog-selfsigned-issuer-certificate
+  duration: 8760h
+  renewBefore: 1000h
+  privateKey:
+    algorithm: ECDSA
+    size: 256
+  issuerRef:
+    name: elasticlog-selfsigned-issuer
+    kind: Issuer
+    group: cert-manager.io
+---
+apiVersion: cert-manager.io/v1
+kind: Issuer
+metadata:
+  name: elasticlog-ca-issuer
+spec:
+  ca:
+    secretName: elasticlog-selfsigned-issuer-certificate

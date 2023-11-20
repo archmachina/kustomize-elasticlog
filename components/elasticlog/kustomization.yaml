@@ -1,0 +1,294 @@
+---
+
+kind: Component
+
+resources:
+  - ca.yaml
+  - certificates.yaml
+
+components:
+  - ../../modules/beatload/components/beatload
+
+  - ../../modules/elastic/components/elastic
+  - ../../modules/elastic/components/elastic_ingress
+
+  - ../../modules/kibana/components/kibana
+  - ../../modules/kibana/components/kibana_ingress
+
+  - ../../modules/logstash/components/logstash
+  - ../../modules/logstash/components/logstash_ingress
+
+  - ../../modules/filebeat-netflow/components/filebeat-netflow
+
+  - ../../modules/filebeat-syslog/components/filebeat-syslog
+
+patches:
+  - patch: |-
+      ---
+      apiVersion: apps/v1
+      kind: Deployment
+      metadata:
+        name: logstash-dp
+      spec:
+        template:
+          spec:
+            volumes:
+              - name: logstash-cert
+                secret:
+                  secretName: logstash-cert
+            containers:
+              - name: logstash
+                volumeMounts:
+                  - name: logstash-cert
+                    mountPath: /usr/share/logstash/certs/
+  - patch: |-
+      ---
+      apiVersion: apps/v1
+      kind: DaemonSet
+      metadata:
+        name: filebeat-syslog-ds
+      spec:
+        template:
+          spec:
+            volumes:
+              - name: filebeat-syslog-cert
+                secret:
+                  secretName: filebeat-syslog-cert
+            containers:
+              - name: filebeat-syslog
+                volumeMounts:
+                  - name: filebeat-syslog-cert
+                    mountPath: /usr/share/filebeat/certs/
+  - patch: |-
+      ---
+      apiVersion: apps/v1
+      kind: DaemonSet
+      metadata:
+        name: filebeat-netflow-ds
+      spec:
+        template:
+          spec:
+            volumes:
+              - name: filebeat-netflow-cert
+                secret:
+                  secretName: filebeat-netflow-cert
+            containers:
+              - name: filebeat-netflow
+                volumeMounts:
+                  - name: filebeat-netflow-cert
+                    mountPath: /usr/share/filebeat/certs/
+  - patch: |-
+      ---
+      apiVersion: apps/v1
+      kind: Deployment
+      metadata:
+        name: beatload-dp
+      spec:
+        template:
+          spec:
+            volumes:
+              - name: beatload-cert
+                secret:
+                  secretName: beatload-cert
+            initContainers:
+              - name: wait
+              - name: filebeat-load
+                volumeMounts:
+                  - name: beatload-cert
+                    mountPath: /usr/share/filebeat/certs
+              - name: filebeat-load-dashboard
+                volumeMounts:
+                  - name: beatload-cert
+                    mountPath: /usr/share/filebeat/certs
+              - name: metricbeat-load
+                volumeMounts:
+                  - name: beatload-cert
+                    mountPath: /usr/share/metricbeat/certs
+              - name: metricbeat-load-dashboard
+                volumeMounts:
+                  - name: beatload-cert
+                    mountPath: /usr/share/metricbeat/certs
+              - name: auditbeat-load
+                volumeMounts:
+                  - name: beatload-cert
+                    mountPath: /usr/share/auditbeat/certs
+              - name: auditbeat-load-dashboard
+                volumeMounts:
+                  - name: beatload-cert
+                    mountPath: /usr/share/auditbeat/certs
+
+replacements:
+  - source:
+      kind: ConfigMap
+      name: elasticlog-cert-config
+      fieldPath: data.ca_duration
+    targets:
+      - select:
+          group: cert-manager.io
+          version: v1
+          kind: Certificate
+          name: elasticlog-selfsigned-issuer-certificate
+        fieldPaths:
+          - spec.duration
+  - source:
+      kind: ConfigMap
+      name: elasticlog-cert-config
+      fieldPath: data.ca_renewBefore
+    targets:
+      - select:
+          group: cert-manager.io
+          version: v1
+          kind: Certificate
+          name: elasticlog-selfsigned-issuer-certificate
+        fieldPaths:
+          - spec.renewBefore
+
+  - source:
+      kind: ConfigMap
+      name: elasticlog-cert-config
+      fieldPath: data.cert_duration
+    targets:
+      - select:
+          group: cert-manager.io
+          version: v1
+          kind: Certificate
+          name: kibana-cert
+        fieldPaths:
+          - spec.duration
+  - source:
+      kind: ConfigMap
+      name: elasticlog-cert-config
+      fieldPath: data.cert_renewBefore
+    targets:
+      - select:
+          group: cert-manager.io
+          version: v1
+          kind: Certificate
+          name: kibana-cert
+        fieldPaths:
+          - spec.renewBefore
+
+  - source:
+      kind: ConfigMap
+      name: elasticlog-cert-config
+      fieldPath: data.cert_duration
+    targets:
+      - select:
+          group: cert-manager.io
+          version: v1
+          kind: Certificate
+          name: elastic-cert
+        fieldPaths:
+          - spec.duration
+  - source:
+      kind: ConfigMap
+      name: elasticlog-cert-config
+      fieldPath: data.cert_renewBefore
+    targets:
+      - select:
+          group: cert-manager.io
+          version: v1
+          kind: Certificate
+          name: elastic-cert
+        fieldPaths:
+          - spec.renewBefore
+
+  - source:
+      kind: ConfigMap
+      name: elasticlog-cert-config
+      fieldPath: data.cert_duration
+    targets:
+      - select:
+          group: cert-manager.io
+          version: v1
+          kind: Certificate
+          name: filebeat-syslog-cert
+        fieldPaths:
+          - spec.duration
+  - source:
+      kind: ConfigMap
+      name: elasticlog-cert-config
+      fieldPath: data.cert_renewBefore
+    targets:
+      - select:
+          group: cert-manager.io
+          version: v1
+          kind: Certificate
+          name: filebeat-syslog-cert
+        fieldPaths:
+          - spec.renewBefore
+
+  - source:
+      kind: ConfigMap
+      name: elasticlog-cert-config
+      fieldPath: data.cert_duration
+    targets:
+      - select:
+          group: cert-manager.io
+          version: v1
+          kind: Certificate
+          name: filebeat-netflow-cert
+        fieldPaths:
+          - spec.duration
+  - source:
+      kind: ConfigMap
+      name: elasticlog-cert-config
+      fieldPath: data.cert_renewBefore
+    targets:
+      - select:
+          group: cert-manager.io
+          version: v1
+          kind: Certificate
+          name: filebeat-netflow-cert
+        fieldPaths:
+          - spec.renewBefore
+
+  - source:
+      kind: ConfigMap
+      name: elasticlog-cert-config
+      fieldPath: data.cert_duration
+    targets:
+      - select:
+          group: cert-manager.io
+          version: v1
+          kind: Certificate
+          name: logstash-cert
+        fieldPaths:
+          - spec.duration
+  - source:
+      kind: ConfigMap
+      name: elasticlog-cert-config
+      fieldPath: data.cert_renewBefore
+    targets:
+      - select:
+          group: cert-manager.io
+          version: v1
+          kind: Certificate
+          name: logstash-cert
+        fieldPaths:
+          - spec.renewBefore
+
+  - source:
+      kind: ConfigMap
+      name: elasticlog-cert-config
+      fieldPath: data.cert_duration
+    targets:
+      - select:
+          group: cert-manager.io
+          version: v1
+          kind: Certificate
+          name: beatload-cert
+        fieldPaths:
+          - spec.duration
+  - source:
+      kind: ConfigMap
+      name: elasticlog-cert-config
+      fieldPath: data.cert_renewBefore
+    targets:
+      - select:
+          group: cert-manager.io
+          version: v1
+          kind: Certificate
+          name: beatload-cert
+        fieldPaths:
+          - spec.renewBefore

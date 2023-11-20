@@ -1,0 +1,18 @@
+[submodule "beatload"]
+	path = modules/beatload
+	url = https://github.com/archmachina/kustomize-beatload
+[submodule "elastic"]
+	path = modules/elastic
+	url = https://github.com/archmachina/kustomize-elastic
+[submodule "filebeat-netflow"]
+	path = modules/filebeat-netflow
+	url = https://github.com/archmachina/kustomize-filebeat-netflow
+[submodule "filebeat-syslog"]
+	path = modules/filebeat-syslog
+	url = https://github.com/archmachina/kustomize-filebeat-syslog
+[submodule "kibana"]
+	path = modules/kibana
+	url = https://github.com/archmachina/kustomize-kibana
+[submodule "logstash"]
+	path = modules/logstash
+	url = https://github.com/archmachina/kustomize-logstash

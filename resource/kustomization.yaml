@@ -1,0 +1,19 @@
+---
+
+kind: Kustomization
+
+resources:
+  - ../modules/beatload/resource
+  - ../modules/elastic/resource
+  - ../modules/kibana/resource
+  - ../modules/logstash/resource
+  - ../modules/filebeat-netflow/resource
+  - ../modules/filebeat-syslog/resource
+
+configMapGenerator:
+  - name: elasticlog-cert-config
+    literals:
+      - ca_duration=8760h
+      - ca_renewBefore=1000h
+      - cert_duration=2160h
+      - cert_renewBefore=360h

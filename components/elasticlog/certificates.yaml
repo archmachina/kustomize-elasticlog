@@ -1,0 +1,85 @@
+---
+apiVersion: cert-manager.io/v1
+kind: Certificate
+metadata:
+  name: logstash-cert
+spec:
+  commonName: logstash
+  secretName: logstash-cert
+  duration: 2160h
+  renewBefore: 360h
+  dnsNames:
+    - logstash.local
+    - logstash-svc
+  issuerRef:
+    name: elasticlog-ca-issuer
+    kind: Issuer
+    group: cert-manager.io
+---
+apiVersion: cert-manager.io/v1
+kind: Certificate
+metadata:
+  name: kibana-cert
+spec:
+  commonName: kibana
+  secretName: kibana-cert
+  duration: 2160h
+  renewBefore: 360h
+  dnsNames:
+    - kibana.local
+    - kibana-svc
+  issuerRef:
+    name: elasticlog-ca-issuer
+    kind: Issuer
+    group: cert-manager.io
+---
+apiVersion: cert-manager.io/v1
+kind: Certificate
+metadata:
+  name: filebeat-syslog-cert
+spec:
+  commonName: filebeat-syslog
+  secretName: filebeat-syslog-cert
+  duration: 2160h
+  renewBefore: 360h
+  dnsNames:
+    - filebeat-syslog.local
+    - filebeat-syslog-svc
+  issuerRef:
+    name: elasticlog-ca-issuer
+    kind: Issuer
+    group: cert-manager.io
+---
+apiVersion: cert-manager.io/v1
+kind: Certificate
+metadata:
+  name: filebeat-netflow-cert
+spec:
+  commonName: filebeat-netflow
+  secretName: filebeat-netflow-cert
+  duration: 2160h
+  renewBefore: 360h
+  dnsNames:
+    - filebeat-netflow.local
+    - filebeat-netflow-svc
+  issuerRef:
+    name: elasticlog-ca-issuer
+    kind: Issuer
+    group: cert-manager.io
+---
+apiVersion: cert-manager.io/v1
+kind: Certificate
+metadata:
+  name: elastic-cert
+spec:
+  commonName: elastic
+  secretName: elastic-cert
+  duration: 2160h
+  renewBefore: 360h
+  dnsNames:
+    - elastic.local
+    - elastic-svc
+  issuerRef:
+    name: elasticlog-ca-issuer
+    kind: Issuer
+    group: cert-manager.io
